@@ -1,0 +1,26 @@
+{
+  "name": "geogw-datagouvfr",
+  "version": "0.1.0",
+  "description": "Publish geogw datasets on data.gouv.fr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jdesboeufs/geogw-datagouvfr.git"
+  },
+  "keywords": [
+    "inspire",
+    "opendata",
+    "data.gouv.fr",
+    "publication",
+    "datasets"
+  ],
+  "author": "Jérôme Desboeufs <jerome.desboeufs@gmail.com>",
+  "license": "AGPL",
+  "bugs": {
+    "url": "https://github.com/jdesboeufs/geogw-datagouvfr/issues"
+  },
+  "homepage": "https://github.com/jdesboeufs/geogw-datagouvfr"
+}
