@@ -5,6 +5,8 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var request = require('superagent');
+var _ = require('lodash');
 
 // Configure mongoose
 require('./lib/config/mongoose');
@@ -17,6 +19,7 @@ var app = express();
 
 /* Assets */
 
+app.use(express.static(__dirname + '/app'));
 
 /* Common middlewares */
 
@@ -28,7 +31,9 @@ app.use(session({
     name: 'sid',
     saveUninitialized: false,
     resave: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    })
 }));
 
 app.use(passport.initialize());
@@ -46,6 +51,42 @@ app.get('/dgv/oauth/callback', passport.authenticate('data.gouv.fr', {
 app.get('/logout', function (req, res){
   req.logout();
   res.redirect('/');
+});
+
+/* API */
+
+app.use('/api', function (req, res, next) {
+    if (!req.user) return res.sendStatus(401);
+    next();
+});
+
+app.get('/api/me', function (req, res) {
+    res.send(req.user);
+});
+
+app.get('/api/catalogs', function (req, res, next) {
+    request
+        .get(process.env.GEOGW_URL + '/api/catalogs')
+        .end(function (err, resp) {
+            if (err) return next(err);
+            if (resp.error) return next(new Error('Server returned status %d', resp.status));
+            res.send(resp.body);
+        });
+});
+
+app.get('/api/catalogs/:catalogId/facets/:facetName', function (req, res, next) {
+    request
+        .get(process.env.GEOGW_URL + '/api/services/' + req.params.catalogId + '/datasets')
+        .query({
+            limit: 1,
+            opendata: 'yes',
+            availability: 'true'
+        })
+        .end(function (err, resp) {
+            if (err) return next(err);
+            if (resp.error) return next(new Error('Server returned status ' + resp.status));
+            res.send(resp.body.facets[req.params.facetName] || []);
+        });
 });
 
 /* UI */
