@@ -8,13 +8,7 @@ mainApp.controller('mainCtrl', function ($scope, $http) {
     });
 
     $http.get('/api/catalogs').success(function (data) {
-        $scope.catalogs = data.map(function (catalog) {
-            return {
-                id: catalog._id,
-                name: catalog.name,
-                normalizedName: _.deburr(catalog.name.toLowerCase())
-            };
-        });
+        $scope.catalogs = data;
     });
 
     $scope.selectTargetOrganization = function (organization) {

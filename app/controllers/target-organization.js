@@ -1,30 +1,9 @@
 mainApp.controller('organizationCtrl', function ($scope, $http) {
 
-
-    $scope.suggestCatalogs = function (str) {
-        if (!$scope.catalogs || $scope.catalogs.length === 0 || !str) return;
-        var sentence = _.deburr(str.toLowerCase());
-
-        $scope.suggestedCatalogs = _($scope.catalogs).chain()
-            .map(function (catalog) {
-                return {
-                    id: catalog.id,
-                    name: catalog.name,
-                    score: catalog.normalizedName.score(sentence)
-                };
-            })
-            .filter(function (catalog) {
-                return catalog.score > 0.4;
-            })
-            .take(10)
-            .value();
-    };
-
     $scope.selectCatalog = function (catalog) {
         $scope.selectedCatalog = catalog;
-        $scope.suggestCatalogsStr = catalog.name;
-        $scope.suggestedCatalogs = null;
         $scope.selectedOrganizations = {};
+        $scope.organizationsLocked = false;
         loadOrganizations();
     };
 
