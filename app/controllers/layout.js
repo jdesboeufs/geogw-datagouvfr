@@ -12,7 +12,7 @@ mainApp.controller('mainCtrl', function ($scope, $http) {
     });
 
     $scope.selectTargetOrganization = function (organization) {
-        if (organization) $scope.targetOrganization = organization.id;
+        if (organization) $scope.targetOrganization = organization;
         else $scope.targetOrganization = null;
     };
 
