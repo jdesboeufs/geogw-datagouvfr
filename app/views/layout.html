@@ -10,7 +10,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.2.15/angular-locale_fr-fr.js"></script>
     <script src="/main.js"></script>
     <script src="/controllers/layout.js"></script>
-    <script src="/controllers/target-organization.js"></script>
+    <script src="/controllers/organization.js"></script>
   </head>
   <body>
     <nav role="navigation" class="navbar navbar-default navbar-static-top">
@@ -27,78 +27,90 @@
             </div>
 
             <!-- Organization -->
-            <div class="panel" ng-class="{ 'panel-danger': !me.organizations, 'panel-default': me.organizations && !targetOrganization, 'panel-success': targetOrganization }">
+            <div class="panel" ng-class="{ 'panel-danger': !organizations, 'panel-default': organizations && !currentOrganization, 'panel-success': currentOrganization }">
                 <div class="panel-heading">
                     <h2 class="panel-title"><i class="fa fa-building"></i> Votre organisation</h2>
                 </div>
-                <div class="panel-body" ng-if="!me.organizations">
+                <div class="panel-body" ng-if="!organizations">
                     Vous n'êtes membre d'aucune organisation sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.
                 </div>
-                <div class="panel-body" ng-if="me.organizations && !targetOrganization">
+                <div class="panel-body" ng-if="organizations && !currentOrganization">
                     Choisissez l'organisation que vous souhaitez configurer :
                 </div>
-                <div class="panel-body" ng-if="targetOrganization">
-                    Vous avez sélectionné l'organisation <strong>{{ targetOrganization.name }}</strong>.
-                    <small><a href ng-click="selectTargetOrganization()">Modifier</a></small>
+                <div class="panel-body" ng-if="currentOrganization">
+                    Vous avez sélectionné l'organisation <strong>{{ currentOrganization.name }}</strong>.
+                    <small><a href ng-click="selectCurrentOrganization()">Modifier</a></small>
                 </div>
-                <div class="list-group" ng-if="me.organizations && !targetOrganization">
-                    <a href class="list-group-item" ng-repeat="org in me.organizations" ng-class="{ active: targetOrganization === org.id }" ng-click="selectTargetOrganization(org)">{{ org.name }}</a>
+                <div class="list-group" ng-if="organizations && !currentOrganization">
+                    <a href class="list-group-item" ng-repeat="org in organizations" ng-click="selectCurrentOrganization(org)">
+                        <span class="pull-right badge">{{ organizationStatusLabel(org) }}</span>
+                        {{ org.name }}
+                    </a>
                 </div>
             </div>
 
-            <div ng-if="targetOrganization" ng-controller="organizationCtrl">
+            <div ng-if="currentOrganization" ng-controller="organizationCtrl">
 
                 <!-- Catalog -->
-                <div class="panel" ng-class="{ 'panel-default': !selectedCatalog, 'panel-success': selectedCatalog }">
+                <div class="panel" ng-class="{ 'panel-default': sourceCatalogSelectionActive(), 'panel-success': !sourceCatalogSelectionActive() }">
                     <div class="panel-heading">
                         <h2 class="panel-title"><i class="fa fa-book"></i> Catalogue source</h2>
                     </div>
-                    <div class="panel-body" ng-if="!selectedCatalog">
+                    <div class="panel-body" ng-if="sourceCatalogSelectionActive()">
                         Choisissez le catalogue à partir duquel vous souhaitez importer les jeux de données :
                     </div>
-                    <div class="panel-body" ng-if="selectedCatalog">
-                        Vous avez sélectionné le catalogue <strong>{{ selectedCatalog.name }}</strong>.
-                        <small><a href ng-click="cleanSelectedCatalog()">Modifier</a></small>
+                    <div class="panel-body" ng-if="!sourceCatalogSelectionActive()">
+                        Vous avez sélectionné le catalogue <strong>{{ selectedCatalog().name }}</strong>.
+                        <small><a href ng-click="enableSourceCatalogSelection()">Modifier</a></small>
                     </div>
-                    <div class="list-group" ng-if="!selectedCatalog">
+                    <div class="list-group" ng-if="sourceCatalogSelectionActive()">
                         <a href class="list-group-item" ng-click="selectCatalog(catalog)" ng-repeat="catalog in catalogs | orderBy:'name'">{{ catalog.name }}</a>
                     </div>
                 </div>
 
-                <!-- Organizations -->
-                <div class="panel" ng-class="{ 'panel-default': editingOrganizations(), 'panel-danger': organizationsInCatalog.length === 0, 'panel-success': selectedOrganizations && organizationsLocked }" ng-if="organizationsInCatalog">
+                <!-- Producers -->
+                <div class="panel" ng-class="{ 'panel-default': selectedProducersCount() === 0, 'panel-danger': producers.length === 0, 'panel-success': selectedProducersCount() > 0 }" ng-if="selectedCatalog() && !sourceCatalogSelectionActive()">
                     <div class="panel-heading">
                         <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs source</h2>
                     </div>
 
-                    <div class="panel-body" ng-if="organizationsInCatalog.length === 0">
-                        Aucun des producteurs du catalogue n'a publié de données ouvertes.
+                    <div class="panel-body" ng-if="producersSelectionActive()">
+                        Ajoutez les producteurs dont vous souhaitez que les données ouvertes soient publiées dans votre organisation.
+                        <small ng-if="selectedProducersCount() > 0"><a href ng-click="disableProducersSelection()">J'ai terminé</a></small>
                     </div>
-
-                    <div class="panel-body" ng-if="editingOrganizations()">
-                        Sélectionnez les producteurs dont vous souhaitez que les données ouvertes soient publiées dans votre organisation.
-                    </div>
-                    <div class="list-group" ng-if="editingOrganizations()">
-                        <a href ng-class="{ active: organizationIsSelected(org) }" class="list-group-item" ng-repeat="org in organizationsInCatalog | orderBy:'value'" ng-if="org.value !== 'none'" ng-click="toggleOrganization(org)">
+                    <div class="list-group" ng-if="producersSelectionActive()">
+                        <a href ng-class="{ active: producerIsSelected(org) }" class="list-group-item" ng-repeat="org in availableProducers() | orderBy:'value'" ng-if="org.value !== 'none'" ng-click="associateProducer(org)">
                             <span class="pull-right badge">{{ org.count }}</span>
                             {{ org.value }}
                         </a>
                     </div>
 
-                    <div class="panel-body" ng-if="selectedOrganizations && organizationsLocked">
-                        Vous avez sélectionné <strong>{{ selectedOrganizationsCount() }}</strong> producteurs.
-                        <small><a href ng-click="toggleOrganizationsLock()">Modifier</a></small>
-                    </div>
-                    <div class="list-group" ng-if="selectedOrganizations && organizationsLocked">
-                        <div class="list-group-item" ng-if="org" ng-repeat="(orgName, org) in selectedOrganizations | orderBy:'value'">
-                            <span class="pull-right badge">{{ org.count }}</span>
-                            {{ org.value }}
-                        </div>
+                    <div class="panel-body" ng-if="producers.length === 0">
+                        Aucun des producteurs du catalogue n'a publié de données ouvertes.
                     </div>
 
-                    <div class="panel-footer clearfix" ng-if="editingOrganizations()">
+                    <div class="panel-body" ng-if="selectedProducersCount()">
+                        <span ng-if="selectedProducersCount() === 1"><strong>1</strong> producteur est associé à votre organisation.</span>
+                        <span ng-if="selectedProducersCount() > 1"><strong>{{ selectedProducersCount() }}</strong> producteurs sont associés à votre organisation.</span>
+                        <small ng-if="!producersSelectionActive() && availableProducers().length > 0"><a href ng-click="enableProducersSelection()">Ajouter</a></small>
+                    </div>
+
+                    <div class="list-group" ng-if="selectedProducersCount() > 0">
+                        <div class="list-group-item" ng-if="org" ng-repeat="(orgName, org) in selectedProducers | orderBy:'value'">
+                            <span class="pull-right" ng-if="true"><a href ng-click="dissociateProducer(orgName)">Dissocier</a></span>
+                            {{ orgName }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Synchronization -->
+                <div class="panel panel-primary" ng-if="selectedProducersCount() > 0 && !producersSelectionActive() && !sourceCatalogSelectionActive()">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"><i class="fa fa-refresh"></i> Synchronisation</h2>
+                    </div>
+                    <div class="panel-footer clearfix">
                         <div class="pull-right">
-                            <button class="btn btn-primary" ng-click="toggleOrganizationsLock()">Valider</button>
+                            <button class="btn btn-primary" ng-click="synchronize()">Synchroniser</button>
                         </div>
                     </div>
                 </div>
