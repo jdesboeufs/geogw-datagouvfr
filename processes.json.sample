@@ -30,9 +30,6 @@
       "instances": 2,
       "env": {
         "DATAGOUV_URL": "https://demo.data.gouv.fr",
-        "DATAGOUV_CLIENT_ID": "",
-        "DATAGOUV_CLIENT_SECRET": "",
-        "DATAGOUV_CB_URL": "http://localhost:5000/dgv/oauth/callback",
         "MONGODB_URL": "mongodb://localhost/geogw-dgv",
         "REDIS_HOST": "localhost",
         "REDIS_PORT": 6379,
