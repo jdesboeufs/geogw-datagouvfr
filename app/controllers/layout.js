@@ -1,4 +1,4 @@
-mainApp.controller('mainCtrl', function ($scope, $http) {
+angular.module('mainApp').controller('mainCtrl', function ($scope, $http) {
 
     $http.get('/api/me').success(function (data) {
         $scope.me = data;

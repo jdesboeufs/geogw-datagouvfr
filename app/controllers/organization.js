@@ -1,4 +1,4 @@
-mainApp.controller('organizationCtrl', function ($scope, $http) {
+angular.module('mainApp').controller('organizationCtrl', function ($scope, $http) {
     $scope.producers = [];
     $scope.selectedProducers = {};
 
