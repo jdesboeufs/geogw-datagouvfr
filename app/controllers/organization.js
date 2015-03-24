@@ -2,6 +2,10 @@ mainApp.controller('organizationCtrl', function ($scope, $http) {
     $scope.producers = [];
     $scope.selectedProducers = {};
 
+    function organizationBaseUrl() {
+        return '/api/organizations/' + $scope.currentOrganization._id;
+    }
+
     $scope.initSourceCatalog = function (sourceCatalog) {
         if (!sourceCatalog) return;
 
@@ -14,6 +18,10 @@ mainApp.controller('organizationCtrl', function ($scope, $http) {
 
         $http.get('/api/catalogs/' + sourceCatalog + '/producers').success(function (data) {
             $scope.producers = data;
+        });
+
+        $http.get(organizationBaseUrl() + '/datasets').success(function (data) {
+            $scope.datasets = data;
         });
     };
 
@@ -30,10 +38,6 @@ mainApp.controller('organizationCtrl', function ($scope, $http) {
     };
 
     $scope.$watch('currentOrganization.sourceCatalog', $scope.initSourceCatalog);
-
-    function organizationBaseUrl() {
-        return '/api/organizations/' + $scope.currentOrganization._id;
-    }
 
     $scope.selectedCatalog = function () {
         return _.find($scope.catalogs, { _id: $scope.currentOrganization.sourceCatalog });
@@ -108,6 +112,36 @@ mainApp.controller('organizationCtrl', function ($scope, $http) {
     $scope.synchronize = function () {
         $http.post(organizationBaseUrl() + '/synchronize', {}).success(function () {
 
+        });
+    };
+
+    $scope.publicationStatus = function (dataset) {
+        if (!dataset.publication || !dataset.publication._id) return 'not-published';
+        if (dataset.publication.organization !== $scope.currentOrganization._id) return 'published-by-other';
+        return dataset.publication.status === 'public' ? 'published-public' : 'published-private';
+    };
+
+    $scope.datasetCanBePublished = function (dataset) {
+        var publicationStatus = $scope.publicationStatus(dataset);
+        return publicationStatus === 'not-published';
+    };
+
+    $scope.isPublished = function (dataset) {
+        var publicationStatus = $scope.publicationStatus(dataset);
+        return publicationStatus.indexOf('published-p') === 0;
+    };
+
+    $scope.datasetToggleStatus = function (dataset) {
+        $scope.publishDataset(dataset, dataset.publication.status === 'public' ? 'private' : 'public');
+    };
+
+    $scope.publishDataset = function (dataset, status) {
+        $http.put('/api/datasets/' + dataset._id + '/publication', {
+            organization: $scope.currentOrganization._id,
+            status: status,
+            sourceCatalog: $scope.currentOrganization.sourceCatalog
+        }).success(function (data) {
+            dataset.publication = data;
         });
     };
 
