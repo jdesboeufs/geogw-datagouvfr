@@ -1,4 +1,4 @@
-angular.module('mainApp').controller('organizationCtrl', function ($scope, $http, $routeParams) {
+angular.module('mainApp').controller('OrganizationIndex', function ($scope, $http, $routeParams) {
     $scope.currentOrganization = { _id: $routeParams.organizationId };
 
     $http.get('/api/organizations/' + $scope.currentOrganization._id).success(function (data) {

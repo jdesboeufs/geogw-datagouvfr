@@ -8,8 +8,8 @@ mainApp.config(function($routeProvider, $locationProvider) {
             controller: 'mainCtrl'
         })
         .when('/org/:organizationId', {
-            templateUrl: '/partials/organization.html',
-            controller: 'organizationCtrl'
+            templateUrl: '/partials/organization/index.html',
+            controller: 'OrganizationIndex'
         })
         .otherwise({
             redirectTo: '/'
