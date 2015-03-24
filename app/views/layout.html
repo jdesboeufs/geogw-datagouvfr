@@ -125,7 +125,7 @@
                             <span class="pull-right">
                                 <span ng-if="publicationStatus(dataset) === 'published-by-other'">Publié par une autre organisation</span>
                                 <span ng-if="isPublished(dataset)">Publié (<a href ng-click="datasetToggleStatus(dataset)">mode {{ dataset.publication.status === 'public' ? 'public' : 'privé' }}</a>)</span>
-                                <span ng-if="isPublished(dataset)">- <a href ng-click="publishDataset(dataset, 'private')">Forcer la mise à jour</a></span>
+                                <span ng-if="isPublished(dataset)">- <a href ng-click="publishDataset(dataset, 'private')">Forcer la mise à jour</a> - <a href ng-click="unpublishDataset(dataset)">Supprimer</a></span>
                                 <span ng-if="datasetCanBePublished(dataset)">Non publié - <a href ng-click="publishDataset(dataset, 'private')">Publier</a></span>
                             </span>
                             {{ dataset.title }}

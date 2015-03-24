@@ -145,4 +145,10 @@ angular.module('mainApp').controller('organizationCtrl', function ($scope, $http
         });
     };
 
+    $scope.unpublishDataset = function (dataset) {
+        $http.delete('/api/datasets/' + dataset._id + '/publication').success(function () {
+            dataset.publication = {};
+        });
+    };
+
 });
