@@ -129,6 +129,7 @@
                                 <span ng-if="datasetCanBePublished(dataset)">Non publié - <a href ng-click="publishDataset(dataset, 'private')">Publier</a></span>
                             </span>
                             {{ dataset.title }}
+                            <div ng-if="isPublished(dataset)"><a href="https://demo.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
                         </div>
                     </div>
                 </div>
