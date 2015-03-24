@@ -11,6 +11,10 @@ mainApp.config(function($routeProvider, $locationProvider) {
             templateUrl: '/partials/organization/index.html',
             controller: 'OrganizationIndex'
         })
+        .when('/org/:organizationId/datasets', {
+            templateUrl: '/partials/organization/datasets.html',
+            controller: 'OrganizationDatasets'
+        })
         .otherwise({
             redirectTo: '/'
         });

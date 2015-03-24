@@ -1,0 +1,24 @@
+<ol class="breadcrumb">
+  <li><a href="/">Page d'accueil</a></li>
+  <li><a href="/org/{{ currentOrganization._id }}">{{ currentOrganization.name }}</a></li>
+  <li class="active">Jeux de données</li>
+</ol>
+
+<!-- Datasets -->
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-cubes"></i> Jeux de données</h2>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="dataset in datasets">
+            <span class="pull-right">
+                <span ng-if="publicationStatus(dataset) === 'published-by-other'">Publié par une autre organisation</span>
+                <span ng-if="isPublished(dataset)">Publié (<a href ng-click="datasetToggleStatus(dataset)">mode {{ dataset.publication.status === 'public' ? 'public' : 'privé' }}</a>)</span>
+                <span ng-if="isPublished(dataset)">- <a href ng-click="publishDataset(dataset, 'private')">Forcer la mise à jour</a> - <a href ng-click="unpublishDataset(dataset)">Supprimer</a></span>
+                <span ng-if="datasetCanBePublished(dataset)">Non publié - <a href ng-click="publishDataset(dataset, 'private')">Publier</a></span>
+            </span>
+            {{ dataset.title }}
+            <div ng-if="isPublished(dataset)"><a href="https://demo.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
+        </div>
+    </div>
+</div>
