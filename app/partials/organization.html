@@ -1,0 +1,87 @@
+<ol class="breadcrumb">
+  <li><a href="/">Page d'accueil</a></li>
+  <li class="active">{{ currentOrganization.name }}</li>
+</ol>
+
+<!-- Catalog -->
+<div class="panel" ng-class="{ 'panel-default': sourceCatalogSelectionActive(), 'panel-success': !sourceCatalogSelectionActive() }">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-book"></i> Catalogue source</h2>
+    </div>
+    <div class="panel-body" ng-if="sourceCatalogSelectionActive()">
+        Choisissez le catalogue à partir duquel vous souhaitez importer les jeux de données :
+    </div>
+    <div class="panel-body" ng-if="!sourceCatalogSelectionActive()">
+        Vous avez sélectionné le catalogue <strong>{{ selectedCatalog().name }}</strong>.
+        <small><a href ng-click="enableSourceCatalogSelection()">Modifier</a></small>
+    </div>
+    <div class="list-group" ng-if="sourceCatalogSelectionActive()">
+        <a href class="list-group-item" ng-click="selectCatalog(catalog)" ng-repeat="catalog in catalogs | orderBy:'name'">{{ catalog.name }}</a>
+    </div>
+</div>
+
+<!-- Producers -->
+<div class="panel" ng-class="{ 'panel-default': selectedProducersCount() === 0, 'panel-danger': producers.length === 0, 'panel-success': selectedProducersCount() > 0 }" ng-if="selectedCatalog() && !sourceCatalogSelectionActive()">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs source</h2>
+    </div>
+
+    <div class="panel-body" ng-if="producersSelectionActive()">
+        Ajoutez les producteurs dont vous souhaitez que les données ouvertes soient publiées dans votre organisation.
+        <small ng-if="selectedProducersCount() > 0"><a href ng-click="disableProducersSelection()">J'ai terminé</a></small>
+    </div>
+    <div class="list-group" ng-if="producersSelectionActive()">
+        <a href ng-class="{ active: producerIsSelected(org) }" class="list-group-item" ng-repeat="org in availableProducers() | orderBy:'value'" ng-if="org.value !== 'none'" ng-click="associateProducer(org)">
+            <span class="pull-right badge">{{ org.count }}</span>
+            {{ org.value }}
+        </a>
+    </div>
+
+    <div class="panel-body" ng-if="producers.length === 0">
+        Aucun des producteurs du catalogue n'a publié de données ouvertes.
+    </div>
+
+    <div class="panel-body" ng-if="selectedProducersCount()">
+        <span ng-if="selectedProducersCount() === 1"><strong>1</strong> producteur est associé à votre organisation.</span>
+        <span ng-if="selectedProducersCount() > 1"><strong>{{ selectedProducersCount() }}</strong> producteurs sont associés à votre organisation.</span>
+        <small ng-if="!producersSelectionActive() && availableProducers().length > 0"><a href ng-click="enableProducersSelection()">Ajouter</a></small>
+    </div>
+
+    <div class="list-group" ng-if="selectedProducersCount() > 0">
+        <div class="list-group-item" ng-if="org" ng-repeat="(orgName, org) in selectedProducers | orderBy:'value'">
+            <span class="pull-right" ng-if="true"><a href ng-click="dissociateProducer(orgName)">Dissocier</a></span>
+            {{ orgName }}
+        </div>
+    </div>
+</div>
+
+<!-- Synchronization -->
+<div class="panel panel-primary" ng-if="selectedProducersCount() > 0 && !producersSelectionActive() && !sourceCatalogSelectionActive()">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-refresh"></i> Synchronisation</h2>
+    </div>
+    <div class="panel-footer clearfix">
+        <div class="pull-right">
+            <button class="btn btn-primary" ng-click="synchronize()">Synchroniser</button>
+        </div>
+    </div>
+</div>
+
+<!-- Datasets -->
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-cubes"></i> Jeux de données</h2>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="dataset in datasets">
+            <span class="pull-right">
+                <span ng-if="publicationStatus(dataset) === 'published-by-other'">Publié par une autre organisation</span>
+                <span ng-if="isPublished(dataset)">Publié (<a href ng-click="datasetToggleStatus(dataset)">mode {{ dataset.publication.status === 'public' ? 'public' : 'privé' }}</a>)</span>
+                <span ng-if="isPublished(dataset)">- <a href ng-click="publishDataset(dataset, 'private')">Forcer la mise à jour</a> - <a href ng-click="unpublishDataset(dataset)">Supprimer</a></span>
+                <span ng-if="datasetCanBePublished(dataset)">Non publié - <a href ng-click="publishDataset(dataset, 'private')">Publier</a></span>
+            </span>
+            {{ dataset.title }}
+            <div ng-if="isPublished(dataset)"><a href="https://demo.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
+        </div>
+    </div>
+</div>

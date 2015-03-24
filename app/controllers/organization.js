@@ -1,4 +1,14 @@
-angular.module('mainApp').controller('organizationCtrl', function ($scope, $http) {
+angular.module('mainApp').controller('organizationCtrl', function ($scope, $http, $routeParams) {
+    $scope.currentOrganization = { _id: $routeParams.organizationId };
+
+    $http.get('/api/organizations/' + $scope.currentOrganization._id).success(function (data) {
+        _.assign($scope.currentOrganization, data);
+    });
+
+    $http.get('/api/catalogs').success(function (data) {
+        $scope.catalogs = data;
+    });
+
     $scope.producers = [];
     $scope.selectedProducers = {};
 

@@ -1,0 +1,26 @@
+<div ng-if="me">
+    <!-- You -->
+    <div class="alert alert-info">
+        Vous êtes connecté(e) en tant que <strong>{{ me.first_name }} {{ me.last_name }}</strong>.
+        <small><a class="alert-link" href="/logout" target="_self">Me déconnecter</a></small>
+    </div>
+
+    <!-- Organization -->
+    <div class="panel" ng-class="{ 'panel-danger': !organizations, 'panel-default': organizations && !currentOrganization, 'panel-success': currentOrganization }">
+        <div class="panel-heading">
+            <h2 class="panel-title"><i class="fa fa-building"></i> Votre organisation</h2>
+        </div>
+        <div class="panel-body" ng-if="!organizations">
+            Vous n'êtes membre d'aucune organisation sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.
+        </div>
+        <div class="panel-body" ng-if="organizations">
+            Choisissez l'organisation que vous souhaitez configurer :
+        </div>
+        <div class="list-group" ng-if="organizations">
+            <a href="/org/{{ org._id }}" class="list-group-item" ng-repeat="org in organizations">
+                {{ org.name }}
+            </a>
+        </div>
+    </div>
+
+</div>
