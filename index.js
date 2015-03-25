@@ -56,6 +56,10 @@ require('./lib/api')(app);
 
 /* UI */
 
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/app/views/layout.html');
+});
+
 app.get('*', function (req, res) {
     if (!req.user) return res.redirect('/login');
     res.sendFile(__dirname + '/app/views/layout.html');

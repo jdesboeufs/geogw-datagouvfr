@@ -1,12 +1,19 @@
-<div ng-if="me">
+<div ng-if="!me" class="jumbotron">
+    <h1>Inspire ? Open Data !</h1>
+    <p>Votre organisation gère des <strong>données géographiques</strong> avec des outils compatibles <a target="_blank" href="http://fr.wikipedia.org/wiki/Infrastructure_d%27information_g%C3%A9ographique_dans_la_Communaut%C3%A9_europ%C3%A9enne">Inspire</a> et souhaite les rendre disponibles sans effort sur <a href="https://data.gouv.fr">data.gouv.fr</a>.</p>
+    <p><a class="btn btn-primary btn-lg" href="/login" target="_blank" role="button"><i class="fa fa-rocket"></i> C'est par ici !</a></p>
+</div>
 
-    <!-- Organization -->
-    <div class="panel" ng-class="{ 'panel-danger': !organizations, 'panel-default': organizations && !currentOrganization, 'panel-success': currentOrganization }">
+<div ng-if="me">
+    <div class="alert alert-info" role="alert"><strong>Info :</strong> Vous pouvez activer la passerelle <strong>inspire.data.gouv.fr</strong> pour plusieurs organisations.</div>
+
+    <div class="panel" ng-class="{ 'panel-danger': !organizations, 'panel-primary': organizations }">
         <div class="panel-heading">
-            <h2 class="panel-title"><i class="fa fa-building"></i> Votre organisation</h2>
+            <h2 class="panel-title"><i class="fa fa-building"></i> Vos organisations</h2>
         </div>
         <div class="panel-body" ng-if="!organizations">
-            Vous n'êtes membre d'aucune organisation sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.
+            <p>Vous n'êtes membre d'aucune organisation sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.</p>
+            <p><a href="https://www.data.gouv.fr/fr/organizations/new/">Créer une organisation</a></p>
         </div>
         <div class="panel-body" ng-if="organizations">
             Choisissez l'organisation que vous souhaitez configurer :
@@ -17,5 +24,4 @@
             </a>
         </div>
     </div>
-
 </div>
