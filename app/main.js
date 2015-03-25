@@ -19,3 +19,9 @@ mainApp.config(function($routeProvider, $locationProvider) {
             redirectTo: '/'
         });
 });
+
+mainApp.controller('navbar', function ($scope, $http) {
+    $http.get('/api/me').success(function (data) {
+        $scope.me = data;
+    });
+});

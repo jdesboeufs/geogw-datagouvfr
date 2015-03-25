@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr" ng-app="mainApp">
   <head>
-    <title>Passerelle Inspire Open Data</title>
+    <title>inspire.data.gouv.fr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.2/yeti/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -15,9 +15,13 @@
     <script src="/controllers/organization/datasets.js"></script>
   </head>
   <body>
-    <nav role="navigation" class="navbar navbar-default navbar-static-top">
+    <nav ng-controller="navbar" role="navigation" class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
-        <div class="navbar-header"><a href="/" class="navbar-brand">Passerelle Inspire Open Data</a></div>
+        <div class="navbar-header"><a href="/" class="navbar-brand">inspire.data.gouv.fr</a></div>
+        <p ng-if="me" class="navbar-text">Connecté en tant que {{ me.first_name }} {{ me.last_name }}</p>
+        <ul ng-if="me" class="nav navbar-nav navbar-right">
+          <li><a href="/logout" target="_self">Forcer la reconnexion</a></li>
+        </ul>
       </div>
     </nav>
     <div class="container" ng-view></div>

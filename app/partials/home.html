@@ -1,9 +1,4 @@
 <div ng-if="me">
-    <!-- You -->
-    <div class="alert alert-info">
-        Vous êtes connecté(e) en tant que <strong>{{ me.first_name }} {{ me.last_name }}</strong>.
-        <small><a class="alert-link" href="/logout" target="_self">Me déconnecter</a></small>
-    </div>
 
     <!-- Organization -->
     <div class="panel" ng-class="{ 'panel-danger': !organizations, 'panel-default': organizations && !currentOrganization, 'panel-success': currentOrganization }">
