@@ -42,7 +42,7 @@
                 <a href ng-click="unpublishDataset(dataset)">Supprimer</a></span>
             </span>
             {{ dataset.title }}
-            <div ng-if="isPublished(dataset)"><a href="https://demo.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
+            <div ng-if="isPublished(dataset)"><a href="https://data.gouv.fr.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
         </div>
     </div>
 </div>
@@ -65,7 +65,7 @@
                 <a href ng-click="publishDataset(dataset, 'public')">Forcer la mise à jour</a>
             </span>
             {{ dataset.title }}
-            <div ng-if="isPublished(dataset)"><a href="https://demo.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
+            <div ng-if="isPublished(dataset)"><a href="https://data.gouv.fr.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
         </div>
     </div>
 </div>
@@ -78,9 +78,9 @@
     </div>
     <div class="list-group">
         <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-by-other']">
-            <span class="pull-right">Publié par <a target="_blank" href="https://demo.data.gouv.fr/fr/organizations/{{ dataset.publication.organization._id }}/">{{ dataset.publication.organization.name }}</a></span>
+            <span class="pull-right">Publié par <a target="_blank" href="https://data.gouv.fr.fr/fr/organizations/{{ dataset.publication.organization._id }}/">{{ dataset.publication.organization.name }}</a></span>
             {{ dataset.title }}
-            <div><a href="https://demo.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
+            <div><a href="https://data.gouv.fr.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
         </div>
     </div>
 </div>
