@@ -1,0 +1,22 @@
+<ol class="breadcrumb">
+  <li><a href="/">Page d'accueil</a></li>
+  <li><a href="/org/{{ currentOrganization._id }}">{{ currentOrganization.name }}</a></li>
+  <li class="active">Sélection du catalogue source</li>
+</ol>
+
+<div ng-if="currentOrganization.sourceCatalog" class="alert alert-info">
+    Actuellement votre organisation est configurée avec le catalogue <strong>{{ selectedCatalog().name }}</strong>.
+</div>
+
+<!-- Catalog -->
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-book"></i> Catalogue source</h2>
+    </div>
+    <div class="panel-body">
+        Choisissez le catalogue à partir duquel vous souhaitez importer les jeux de données :
+    </div>
+    <div class="list-group">
+        <a href class="list-group-item" ng-click="selectCatalog(catalog)" ng-repeat="catalog in catalogs | orderBy:'name'">{{ catalog.name }}</a>
+    </div>
+</div>

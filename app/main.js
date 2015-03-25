@@ -11,6 +11,14 @@ mainApp.config(function($routeProvider, $locationProvider) {
             templateUrl: '/partials/organization/index.html',
             controller: 'OrganizationIndex'
         })
+        .when('/org/:organizationId/catalog-selection', {
+            templateUrl: '/partials/organization/catalog.html',
+            controller: 'OrganizationCatalog'
+        })
+        .when('/org/:organizationId/producers', {
+            templateUrl: '/partials/organization/producers.html',
+            controller: 'OrganizationProducers'
+        })
         .when('/org/:organizationId/datasets', {
             templateUrl: '/partials/organization/datasets.html',
             controller: 'OrganizationDatasets'

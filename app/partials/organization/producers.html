@@ -1,0 +1,43 @@
+<ol class="breadcrumb">
+  <li><a href="/">Page d'accueil</a></li>
+  <li><a href="/org/{{ currentOrganization._id }}">{{ currentOrganization.name }}</a></li>
+  <li class="active">Sélection des producteurs</li>
+</ol>
+
+<div class="panel panel-primary" ng-class="{ 'panel-primary': !weHaveAProblem(), 'panel-danger': weHaveAProblem() }">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs source</h2>
+    </div>
+    <div ng-if="!weHaveAProblem()" class="panel-body">
+        Ajoutez les producteurs dont vous souhaitez que les données ouvertes soient publiées dans votre organisation.
+        <small ng-if="selectedProducersCount() > 0"><a href="/org/{{ currentOrganization._id }}">J'ai terminé</a></small>
+    </div>
+    <div class="list-group">
+        <a href ng-class="{ active: producerIsSelected(org) }" class="list-group-item" ng-repeat="org in availableProducers() | orderBy:'value'" ng-if="org.value !== 'none'" ng-click="associateProducer(org)">
+            <span class="pull-right badge">{{ org.count }}</span>
+            {{ org.value }}
+        </a>
+    </div>
+
+    <div class="panel-body" ng-if="weHaveAProblem()">
+        Aucun des producteurs du catalogue n'a publié de données ouvertes.
+    </div>
+
+    <div class="panel-body" ng-if="selectedProducersCount()">
+        <span ng-if="selectedProducersCount() === 1"><strong>1</strong> producteur est associé à votre organisation.</span>
+        <span ng-if="selectedProducersCount() > 1"><strong>{{ selectedProducersCount() }}</strong> producteurs sont associés à votre organisation.</span>
+    </div>
+
+    <div class="list-group" ng-if="selectedProducersCount() > 0">
+        <div class="list-group-item" ng-if="org" ng-repeat="(orgName, org) in selectedProducers | orderBy:'value'">
+            <span class="pull-right" ng-if="true"><a href ng-click="dissociateProducer(orgName)">Dissocier</a></span>
+            {{ orgName }}
+        </div>
+    </div>
+
+    <div ng-if="weHaveAProblem()" class="panel-footer clearfix">
+        <div class="pull-right">
+            <a class="btn btn-danger" href="/org/{{ currentOrganization._id }}/catalog-selection">Choisir un autre catalogue</a>
+        </div>
+    </div>
+</div>
