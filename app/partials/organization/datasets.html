@@ -62,7 +62,7 @@
         <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-public']">
             <span class="pull-right">
                 <a href ng-click="publishDataset(dataset, 'private')">Repasser en mode privé</a> |
-                <a href ng-click="publishDataset(dataset, 'private')">Forcer la mise à jour</a>
+                <a href ng-click="publishDataset(dataset, 'public')">Forcer la mise à jour</a>
             </span>
             {{ dataset.title }}
             <div ng-if="isPublished(dataset)"><a href="https://demo.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
