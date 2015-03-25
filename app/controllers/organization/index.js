@@ -16,6 +16,19 @@ angular.module('mainApp').controller('OrganizationIndex', function ($scope, $htt
         return '/api/organizations/' + $scope.currentOrganization._id;
     }
 
+    $http.get(organizationBaseUrl() + '/datasets').success(function (data) {
+        $scope.datasetMetrics = _(data)
+            .groupBy(function (dataset) {
+                if (!dataset.publication || !dataset.publication._id) return 'not-published';
+                if (dataset.publication.organization._id !== $scope.currentOrganization._id) return 'published-by-other';
+                return dataset.publication.status === 'public' ? 'published-public' : 'published-private';
+            })
+            .mapValues(function (list) {
+                return list.length;
+            })
+            .value();
+    });
+
     $scope.initSourceCatalog = function (sourceCatalog) {
         if (!sourceCatalog) return;
 

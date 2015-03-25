@@ -11,17 +11,19 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
 
     $http.get(organizationBaseUrl() + '/datasets').success(function (data) {
         $scope.datasets = data;
+        $scope.updateDatasetGroups();
     });
+
+    $scope.updateDatasetGroups = function () {
+        $scope.groupedDatasets = _.groupBy($scope.datasets, function (dataset) {
+            return $scope.publicationStatus(dataset);
+        });
+    };
 
     $scope.publicationStatus = function (dataset) {
         if (!dataset.publication || !dataset.publication._id) return 'not-published';
-        if (dataset.publication.organization !== $scope.currentOrganization._id) return 'published-by-other';
+        if (dataset.publication.organization._id !== $scope.currentOrganization._id) return 'published-by-other';
         return dataset.publication.status === 'public' ? 'published-public' : 'published-private';
-    };
-
-    $scope.datasetCanBePublished = function (dataset) {
-        var publicationStatus = $scope.publicationStatus(dataset);
-        return publicationStatus === 'not-published';
     };
 
     $scope.isPublished = function (dataset) {
@@ -40,12 +42,15 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
             sourceCatalog: $scope.currentOrganization.sourceCatalog
         }).success(function (data) {
             dataset.publication = data;
+            dataset.publication.organization = $scope.currentOrganization; // Dataset operations doesn't populate organization
+            $scope.updateDatasetGroups();
         });
     };
 
     $scope.unpublishDataset = function (dataset) {
         $http.delete('/api/datasets/' + dataset._id + '/publication').success(function () {
             dataset.publication = {};
+            $scope.updateDatasetGroups();
         });
     };
 
