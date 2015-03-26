@@ -16,7 +16,7 @@
         Aucune de vos données n'est en attente de publication.
     </div>
     <div class="list-group" ng-if="groupedDatasets['not-published']">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['not-published']">
+        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['not-published'] | orderBy:'title'">
             <span class="pull-right">
                 <a href ng-click="publishDataset(dataset, 'private')">Publier en mode privé</a> |
                 <a href ng-click="publishDataset(dataset, 'public')">Publier</a>
@@ -35,7 +35,7 @@
         </h2>
     </div>
     <div class="list-group">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-private']">
+        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-private'] | orderBy:'title'">
             <span class="pull-right">
                 <a href ng-click="publishDataset(dataset, 'public')">Publier</a> |
                 <a href ng-click="publishDataset(dataset, 'private')">Forcer la mise à jour</a> |
@@ -59,7 +59,7 @@
         Vous n'avez aucune donnée publiée.
     </div>
     <div class="list-group" ng-if="groupedDatasets['published-public']">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-public']">
+        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-public'] | orderBy:'title'">
             <span class="pull-right">
                 <a href ng-click="publishDataset(dataset, 'private')">Repasser en mode privé</a> |
                 <a href ng-click="publishDataset(dataset, 'public')">Forcer la mise à jour</a>
@@ -77,7 +77,7 @@
         <h2 class="panel-title"><i class="fa fa-cubes"></i> Données publiées par une autre organisation</h2>
     </div>
     <div class="list-group">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-by-other']">
+        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-by-other'] | orderBy:'title'">
             <span class="pull-right">Publié par <a target="_blank" href="https://data.gouv.fr/fr/organizations/{{ dataset.publication.organization._id }}/">{{ dataset.publication.organization.name }}</a></span>
             {{ dataset.title }}
             <div><a href="https://data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
