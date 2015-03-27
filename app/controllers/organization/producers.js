@@ -8,7 +8,6 @@ angular.module('mainApp').controller('OrganizationProducers', function ($scope, 
         $scope.selectedProducers = _.indexBy($scope.currentOrganization.producers, '_id');
 
         $http.get('/api/catalogs/' + $scope.currentOrganization.sourceCatalog + '/producers').success(function (data) {
-            console.log(data);
             $scope.producers = data;
         });
     });

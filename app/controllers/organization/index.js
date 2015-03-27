@@ -9,6 +9,8 @@ angular.module('mainApp').controller('OrganizationIndex', function ($scope, $htt
         $scope.catalogs = data;
     });
 
+    $scope.datasetMetrics = {};
+
     $scope.selectedCatalog = function () {
         return _.find($scope.catalogs, { _id: $scope.currentOrganization.sourceCatalog });
     };
