@@ -9,7 +9,7 @@
         <h2 class="panel-title"><i class="fa fa-cubes"></i> Jeux de données</h2>
     </div>
     <div class="panel-body">
-        <p><strong>{{ datasetMetrics['published-public'] || 0 }}</strong> jeux de données sont <strong>publiés et accessibles</strong> sur <a href="https://data.gouv.fr">data.gouv.fr</a>.<br/>
+        <p><strong>{{ datasetMetrics['published-public'] || 0 }}</strong> jeux de données sont <strong>publiés et accessibles</strong> sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.<br/>
         <strong>{{ datasetMetrics['published-private'] || 0 }}</strong> jeux de données sont en <strong>mode privé</strong>.<br/>
         <strong>{{ datasetMetrics['not-published'] || 0 }}</strong> jeux de données sont <strong>en attente de publication</strong>.</p>
     </div>
@@ -26,7 +26,7 @@
         <h2 class="panel-title"><i class="fa fa-book"></i> Catalogue source</h2>
     </div>
     <div class="panel-body" ng-if="!currentOrganization.sourceCatalog">
-        Pour poursuivre vous devez associer un <strong>catalogue source</strong> à votre organisation <a href="https://data.gouv.fr">data.gouv.fr</a>.
+        Pour poursuivre vous devez associer un <strong>catalogue source</strong> à votre organisation <a href="https://www.data.gouv.fr">data.gouv.fr</a>.
     </div>
     <div class="panel-body" ng-if="currentOrganization.sourceCatalog">
         Le catalogue <strong>{{ selectedCatalog().name }}</strong> est associé à votre organisation.
@@ -45,7 +45,7 @@
         <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs source</h2>
     </div>
     <div class="panel-body" ng-if="currentOrganization.producers.length === 0">
-        Pour poursuivre vous devez associer des <strong>producteurs</strong> à votre organisation <a href="https://data.gouv.fr">data.gouv.fr</a>.
+        Pour poursuivre vous devez associer des <strong>producteurs</strong> à votre organisation <a href="https://www.data.gouv.fr">data.gouv.fr</a>.
     </div>
 
     <div class="panel-body" ng-if="currentOrganization.producers.length > 0">
