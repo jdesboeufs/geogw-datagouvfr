@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-  <li><a href="/">Page d'accueil</a></li>
-  <li><a href="/org/{{ currentOrganization._id }}">{{ currentOrganization.name }}</a></li>
+  <li><a ui-sref="home">Page d'accueil</a></li>
+  <li><a ui-sref="organization.index({ organizationId: currentOrganization._id })">{{ currentOrganization.name }}</a></li>
   <li class="active">Jeux de données</li>
 </ol>
 

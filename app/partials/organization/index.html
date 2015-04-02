@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-  <li><a href="/">Page d'accueil</a></li>
+  <li><a ui-sref="home">Page d'accueil</a></li>
   <li class="active">{{ currentOrganization.name }}</li>
 </ol>
 
@@ -15,7 +15,7 @@
     </div>
     <div class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-primary" href="/org/{{ currentOrganization._id }}/datasets">Publier des données</a>
+            <a class="btn btn-primary" ui-sref="organization.datasets({ organizationId: currentOrganization._id })">Publier des données</a>
         </div>
     </div>
 </div>
@@ -30,11 +30,11 @@
     </div>
     <div class="panel-body" ng-if="currentOrganization.sourceCatalog">
         Le catalogue <strong>{{ selectedCatalog().name }}</strong> est associé à votre organisation.
-        <small><a href="/org/{{ currentOrganization._id }}/catalog-selection">Modifier</a></small>
+        <small><a ui-sref="organization.catalog({ organizationId: currentOrganization._id })">Modifier</a></small>
     </div>
     <div ng-if="!currentOrganization.sourceCatalog" class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-warning" href="/org/{{ currentOrganization._id }}/catalog-selection">Choisir un catalogue</a>
+            <a class="btn btn-warning" ui-sref="organization.catalog({ organizationId: currentOrganization._id })">Choisir un catalogue</a>
         </div>
     </div>
 </div>
@@ -51,12 +51,12 @@
     <div class="panel-body" ng-if="currentOrganization.producers.length > 0">
         <span ng-if="currentOrganization.producers.length === 1"><strong>1 producteur</strong> est associé à votre organisation.</span>
         <span ng-if="currentOrganization.producers.length > 1"><strong>{{ currentOrganization.producers.length }} producteurs</strong> sont associés à votre organisation.</span>
-        <small><a href="/org/{{ currentOrganization._id }}/producers">Ajouter</a></small>
+        <small><a ui-sref="organization.producers({ organizationId: currentOrganization._id })">Ajouter</a></small>
     </div>
 
     <div ng-if="currentOrganization.producers.length === 0" class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-warning" href="/org/{{ currentOrganization._id }}/producers">Associer des producteurs</a>
+            <a class="btn btn-warning" ui-sref="organization.producers({ organizationId: currentOrganization._id })">Associer des producteurs</a>
         </div>
     </div>
 </div>

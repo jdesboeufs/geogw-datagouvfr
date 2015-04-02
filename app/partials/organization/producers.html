@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-  <li><a href="/">Page d'accueil</a></li>
-  <li><a href="/org/{{ currentOrganization._id }}">{{ currentOrganization.name }}</a></li>
+  <li><a ui-sref="home">Page d'accueil</a></li>
+  <li><a ui-sref="organization.index({ organizationId: currentOrganization._id })">{{ currentOrganization.name }}</a></li>
   <li class="active">Sélection des producteurs</li>
 </ol>
 
@@ -10,7 +10,7 @@
     </div>
     <div ng-if="!weHaveAProblem()" class="panel-body">
         Ajoutez les producteurs dont vous souhaitez que les données ouvertes soient publiées dans votre organisation.
-        <small ng-if="selectedProducersCount() > 0"><a href="/org/{{ currentOrganization._id }}">J'ai terminé</a></small>
+        <small ng-if="selectedProducersCount() > 0"><a ui-sref="organization.index({ organizationId: currentOrganization._id })">J'ai terminé</a></small>
     </div>
     <div class="list-group">
         <a href ng-class="{ active: producerIsSelected(org) }" class="list-group-item" ng-repeat="org in availableProducers() | orderBy:'value'" ng-if="org.value !== 'none'" ng-click="associateProducer(org)">
@@ -37,7 +37,7 @@
 
     <div ng-if="weHaveAProblem()" class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-danger" href="/org/{{ currentOrganization._id }}/catalog-selection">Choisir un autre catalogue</a>
+            <a class="btn btn-danger" ui-sref="organization.catalog({ organizationId: currentOrganization._id })">Choisir un autre catalogue</a>
         </div>
     </div>
 </div>

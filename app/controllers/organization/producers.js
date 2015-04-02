@@ -1,15 +1,11 @@
-angular.module('mainApp').controller('OrganizationProducers', function ($scope, $http, $routeParams) {
-    $scope.currentOrganization = { _id: $routeParams.organizationId };
+angular.module('mainApp').controller('OrganizationProducers', function ($scope, $http) {
     $scope.producers = [];
     $scope.selectedProducers = {};
 
-    $http.get('/api/organizations/' + $scope.currentOrganization._id).success(function (data) {
-        _.assign($scope.currentOrganization, data);
-        $scope.selectedProducers = _.indexBy($scope.currentOrganization.producers, '_id');
+    $scope.selectedProducers = _.indexBy($scope.currentOrganization.producers, '_id');
 
-        $http.get('/api/catalogs/' + $scope.currentOrganization.sourceCatalog + '/producers').success(function (data) {
-            $scope.producers = data;
-        });
+    $http.get('/api/catalogs/' + $scope.currentOrganization.sourceCatalog + '/producers').success(function (data) {
+        $scope.producers = data;
     });
 
     $http.get('/api/catalogs').success(function (data) {

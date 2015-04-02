@@ -1,30 +1,50 @@
-var mainApp = angular.module('mainApp', ['ngRoute']);
+var mainApp = angular.module('mainApp', ['ui.router']);
 
-mainApp.config(function($routeProvider, $locationProvider) {
+mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode({ enabled: true, requireBase: false });
-    $routeProvider
-        .when('/', {
+    
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+        .state('home', {
+            url: '/',
             templateUrl: '/partials/home.html',
             controller: 'mainCtrl'
         })
-        .when('/org/:organizationId', {
+        .state('organization', {
+            url: '/org/:organizationId',
+            abstract: true,
+            template: '<ui-view></ui-view>',
+            controller: function ($scope, organization) {
+                $scope.currentOrganization = organization;
+            },
+            resolve: {
+                organization: function ($stateParams, $http) {
+                    return $http.get('/api/organizations/' + $stateParams.organizationId).then(function (result) {
+                        return result.data;
+                    });
+                }
+            }
+        })
+        .state('organization.index', {
+            url: '',
             templateUrl: '/partials/organization/index.html',
             controller: 'OrganizationIndex'
         })
-        .when('/org/:organizationId/catalog-selection', {
+        .state('organization.catalog', {
+            url: '/catalog-selection',
             templateUrl: '/partials/organization/catalog.html',
             controller: 'OrganizationCatalog'
         })
-        .when('/org/:organizationId/producers', {
+        .state('organization.producers', {
+            url: '/producers',
             templateUrl: '/partials/organization/producers.html',
-            controller: 'OrganizationProducers'
+            controller: 'OrganizationProducers'  
         })
-        .when('/org/:organizationId/datasets', {
+        .state('organization.datasets', {
+            url: '/datasets',
             templateUrl: '/partials/organization/datasets.html',
             controller: 'OrganizationDatasets'
-        })
-        .otherwise({
-            redirectTo: '/'
         });
 });
 

@@ -1,9 +1,4 @@
-angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $http, $routeParams, $location) {
-    $scope.currentOrganization = { _id: $routeParams.organizationId };
-
-    $http.get('/api/organizations/' + $scope.currentOrganization._id).success(function (data) {
-        _.assign($scope.currentOrganization, data);
-    });
+angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $http, $location, $state) {
 
     $http.get('/api/catalogs').success(function (data) {
         $scope.catalogs = data;
@@ -20,7 +15,7 @@ angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $h
     $scope.selectCatalog = function (catalog) {
         function onSuccess(data) {
             _.assign($scope.currentOrganization, data);
-            $location.path('/org/' + $scope.currentOrganization._id);
+            $state.go('^');
         }
 
         if ($scope.currentOrganization.sourceCatalog) {

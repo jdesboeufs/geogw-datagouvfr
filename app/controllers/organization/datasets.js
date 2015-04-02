@@ -1,10 +1,4 @@
-angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $http, $routeParams) {
-    $scope.currentOrganization = { _id: $routeParams.organizationId };
-
-    $http.get('/api/organizations/' + $scope.currentOrganization._id).success(function (data) {
-        _.assign($scope.currentOrganization, data);
-    });
-
+angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $http) {
     function organizationBaseUrl() {
         return '/api/organizations/' + $scope.currentOrganization._id;
     }

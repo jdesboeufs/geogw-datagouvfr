@@ -1,9 +1,4 @@
-angular.module('mainApp').controller('OrganizationIndex', function ($scope, $http, $routeParams, $timeout) {
-    $scope.currentOrganization = { _id: $routeParams.organizationId };
-
-    $http.get('/api/organizations/' + $scope.currentOrganization._id).success(function (data) {
-        _.assign($scope.currentOrganization, data);
-    });
+angular.module('mainApp').controller('OrganizationIndex', function ($scope, $http, $timeout) {
 
     $http.get('/api/catalogs').success(function (data) {
         $scope.catalogs = data;
