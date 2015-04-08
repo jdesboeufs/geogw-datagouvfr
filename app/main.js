@@ -22,6 +22,8 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 organization: function ($stateParams, $http) {
                     return $http.get('/api/organizations/' + $stateParams.organizationId).then(function (result) {
                         return result.data;
+                    }, function () {
+                        return { _id: $stateParams.organizationId, producers: [] };
                     });
                 }
             }
