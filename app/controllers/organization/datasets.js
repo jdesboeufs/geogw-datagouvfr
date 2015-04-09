@@ -30,14 +30,20 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
     };
 
     $scope.publishDataset = function (dataset, status) {
+        if (dataset.syncing) return;
+
+        dataset.syncing = true;
         $http.put('/api/datasets/' + dataset._id + '/publication', {
             organization: $scope.currentOrganization._id,
             status: status,
             sourceCatalog: $scope.currentOrganization.sourceCatalog
         }).success(function (data) {
+            dataset.syncing = false;
             dataset.publication = data;
             dataset.publication.organization = $scope.currentOrganization; // Dataset operations doesn't populate organization
             $scope.updateDatasetGroups();
+        }).error(function () {
+            dataset.syncing = false;
         });
     };
 
