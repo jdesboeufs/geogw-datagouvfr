@@ -6,12 +6,34 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-        .state('home', {
+        .state('root', {
             url: '/',
+            abstract: true,
+            template: '<ui-view></ui-view>',
+            controller: function ($scope, user) {
+                if (user) {
+                    $scope.me = user;
+                    $scope.loggedIn = true;
+                } else {
+                    $scope.loggedIn = false;
+                }
+            },
+            resolve: {
+                user: function ($http) {
+                    return $http.get('/api/me').then(function (result) {
+                        return result.data;
+                    }, function () {
+                        return false;
+                    });
+                }
+            }
+        })
+        .state('root.home', {
+            url: '',
             templateUrl: '/partials/home.html',
             controller: 'mainCtrl'
         })
-        .state('organization', {
+        .state('root.organization', {
             url: '/org/:organizationId',
             abstract: true,
             template: '<ui-view></ui-view>',
@@ -28,22 +50,22 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('organization.index', {
+        .state('root.organization.index', {
             url: '',
             templateUrl: '/partials/organization/index.html',
             controller: 'OrganizationIndex'
         })
-        .state('organization.catalog', {
+        .state('root.organization.catalog', {
             url: '/catalog-selection',
             templateUrl: '/partials/organization/catalog.html',
             controller: 'OrganizationCatalog'
         })
-        .state('organization.producers', {
+        .state('root.organization.producers', {
             url: '/producers',
             templateUrl: '/partials/organization/producers.html',
             controller: 'OrganizationProducers'  
         })
-        .state('organization.datasets', {
+        .state('root.organization.datasets', {
             url: '/datasets',
             templateUrl: '/partials/organization/datasets.html',
             controller: 'OrganizationDatasets'

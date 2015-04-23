@@ -15,7 +15,7 @@ angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $h
     $scope.selectCatalog = function (catalog) {
         function onSuccess(data) {
             _.assign($scope.currentOrganization, data);
-            $state.go('organization.index', { organizationId: $scope.currentOrganization._id });
+            $state.go('root.organization.index', { organizationId: $scope.currentOrganization._id });
         }
 
         if ($scope.currentOrganization.sourceCatalog) {
