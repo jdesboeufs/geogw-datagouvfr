@@ -34,7 +34,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'mainCtrl'
         })
         .state('root.organization', {
-            url: '/org/:organizationId',
+            url: 'org/:organizationId',
             abstract: true,
             template: '<ui-view></ui-view>',
             controller: function ($scope, organization) {

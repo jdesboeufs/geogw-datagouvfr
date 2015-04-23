@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-  <li><a ui-sref="home">Page d'accueil</a></li>
+  <li><a ui-sref="root.home">Page d'accueil</a></li>
   <li><a ui-sref="root.organization.index({ organizationId: currentOrganization._id })">{{ currentOrganization.name }}</a></li>
   <li class="active">Jeux de données</li>
 </ol>
@@ -86,11 +86,11 @@
 </div>
 
 <!-- Administration -->
-<div class="panel panel-primary hidden">
+<div class="panel panel-primary" ng-if="me.isAdmin">
     <div class="panel-heading">
-        <h2 class="panel-title"><i class="fa fa-wreck"></i> Administration</h2>
+        <h2 class="panel-title"><i class="fa fa-wrench"></i> Administration</h2>
     </div>
     <div class="panel-body">
-        <button class="btn" ng-click="unpublishAll()">Tout supprimer</button>
+        <button class="btn btn-danger" ng-click="unpublishAll()">Tout dépublier (irréversible)</button>
     </div>
 </div>
