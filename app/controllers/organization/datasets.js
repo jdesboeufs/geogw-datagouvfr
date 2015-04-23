@@ -3,10 +3,14 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
         return '/api/organizations/' + $scope.currentOrganization._id;
     }
 
-    $http.get(organizationBaseUrl() + '/datasets').success(function (data) {
-        $scope.datasets = data;
-        $scope.updateDatasetGroups();
-    });
+    function refresh() {
+        $http.get(organizationBaseUrl() + '/datasets').success(function (data) {
+            $scope.datasets = data;
+            $scope.updateDatasetGroups();
+        });
+    }
+
+    refresh();
 
     $scope.updateDatasetGroups = function () {
         $scope.groupedDatasets = _.groupBy($scope.datasets, function (dataset) {
@@ -51,6 +55,12 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
         $http.delete('/api/datasets/' + dataset._id + '/publication').success(function () {
             dataset.publication = {};
             $scope.updateDatasetGroups();
+        });
+    };
+
+    $scope.unpublishAll = function () {
+        $http.delete(organizationBaseUrl() + '/datasets/publication').success(function () {
+            refresh();
         });
     };
 
