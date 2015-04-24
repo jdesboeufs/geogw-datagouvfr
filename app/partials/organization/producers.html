@@ -1,43 +1,69 @@
 <ol class="breadcrumb">
   <li><a ui-sref="root.home">Page d'accueil</a></li>
   <li><a ui-sref="root.organization.index({ organizationId: currentOrganization._id })">{{ currentOrganization.name }}</a></li>
-  <li class="active">Sélection des producteurs</li>
+  <li class="active">Producteurs</li>
 </ol>
 
-<div class="panel panel-primary" ng-class="{ 'panel-primary': !weHaveAProblem(), 'panel-danger': weHaveAProblem() }">
+<div class="panel panel-success" ng-if="groupedProducers.organization">
     <div class="panel-heading">
-        <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs source</h2>
-    </div>
-    <div ng-if="!weHaveAProblem()" class="panel-body">
-        Ajoutez les producteurs dont vous souhaitez que les données ouvertes soient publiées dans votre organisation.
-        <small ng-if="selectedProducersCount() > 0"><a ui-sref="root.organization.index({ organizationId: currentOrganization._id })">J'ai terminé</a></small>
+        <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs rattachés à votre organisation</h2>
     </div>
     <div class="list-group">
-        <a href ng-class="{ active: producerIsSelected(org) }" class="list-group-item" ng-repeat="org in availableProducers() | orderBy:'value'" ng-if="org.value !== 'none'" ng-click="associateProducer(org)">
-            <span class="pull-right badge">{{ org.count }}</span>
-            {{ org.value }}
-        </a>
-    </div>
-
-    <div class="panel-body" ng-if="weHaveAProblem()">
-        Aucun des producteurs du catalogue n'a publié de données ouvertes.
-    </div>
-
-    <div class="panel-body" ng-if="selectedProducersCount()">
-        <span ng-if="selectedProducersCount() === 1"><strong>1</strong> producteur est associé à votre organisation.</span>
-        <span ng-if="selectedProducersCount() > 1"><strong>{{ selectedProducersCount() }}</strong> producteurs sont associés à votre organisation.</span>
-    </div>
-
-    <div class="list-group" ng-if="selectedProducersCount() > 0">
-        <div class="list-group-item" ng-if="org" ng-repeat="(orgName, org) in selectedProducers | orderBy:'value'">
-            <span class="pull-right" ng-if="true"><a href ng-click="dissociateProducer(orgName)">Dissocier</a></span>
-            {{ orgName }}
+        <div class="list-group-item" ng-repeat="producer in groupedProducers.organization | orderBy:'_id'">
+            <span class="pull-right"><a href ng-click="dissociateProducer(producer)">Dissocier</a></span>
+            {{ producer._id }}
         </div>
     </div>
+</div>
 
-    <div ng-if="weHaveAProblem()" class="panel-footer clearfix">
+<div class="panel panel-danger" ng-if="weHaveAProblem()">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs non rattachés</h2>
+    </div>
+    <div class="panel-body" ng-if="weHaveAProblem()">
+        <p>Aucun des producteurs du catalogue n'a publié de données ouvertes.</p>
+    </div>
+    <div class="panel-footer clearfix">
         <div class="pull-right">
             <a class="btn btn-danger" ui-sref="root.organization.catalog({ organizationId: currentOrganization._id })">Choisir un autre catalogue</a>
         </div>
     </div>
 </div>
+
+<div class="panel panel-primary" ng-if="groupedProducers.available">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs non rattachés</h2>
+    </div>
+    <div class="panel-body">
+        Ajoutez les producteurs dont vous souhaitez que les données ouvertes soient publiées dans votre organisation.
+    </div>
+    <div class="list-group">
+        <a href class="list-group-item" ng-repeat="producer in groupedProducers.available | orderBy:'_id'" ng-if="producer._id !== 'none'" ng-click="associateProducer(producer)">
+            <span class="pull-right badge">{{ producer.count }}</span>
+            {{ producer._id }}
+        </a>
+    </div>
+</div>
+
+<div class="panel panel-warning" ng-if="groupedProducers.restricted">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs rattachés à d'autres organisations</h2>
+    </div>
+    <div class="panel-body">
+        <p>Les producteurs de cette liste ne peuvent pas être rattachés à votre compte organisation parce qu'ils sont déjà rattachés à un autre compte.<br/>
+            N'hésitez pas à contacter l'organisation de rattachement si vous estimez que votre propre compte est plus pertinent.</p>
+        <p>En cas de difficulté, contactez <a href="mailto:inspire@data.gouv.fr">notre équipe</a>.</p>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="producer in groupedProducers.restricted | orderBy:'_id'">
+            <span class="pull-right">Rattaché à <a target="_blank" href="https://www.data.gouv.fr/fr/organizations/{{ producer.associatedTo._id }}/">{{ producer.associatedTo.name }}</a></span>
+            {{ producer._id }}
+        </div>
+    </div>
+</div>
+
+<nav>
+  <ul class="pager">
+    <li class="previous"><a ui-sref="root.organization.index({ organizationId: currentOrganization._id })"><span aria-hidden="true">&larr;</span> Retour à la page précédente</a></li>
+  </ul>
+</nav>

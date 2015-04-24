@@ -63,7 +63,14 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         .state('root.organization.producers', {
             url: '/producers',
             templateUrl: '/partials/organization/producers.html',
-            controller: 'OrganizationProducers'  
+            controller: 'OrganizationProducers',
+            resolve: {
+                associatedProducers: function ($http) {
+                    return $http.get('/api/producers').then(function (result) {
+                        return result.data;
+                    });
+                }
+            }
         })
         .state('root.organization.datasets', {
             url: '/datasets',

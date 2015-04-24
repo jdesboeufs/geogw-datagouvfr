@@ -51,12 +51,11 @@
     <div class="panel-body" ng-if="currentOrganization.producers.length > 0">
         <span ng-if="currentOrganization.producers.length === 1"><strong>1 producteur</strong> est associé à votre organisation.</span>
         <span ng-if="currentOrganization.producers.length > 1"><strong>{{ currentOrganization.producers.length }} producteurs</strong> sont associés à votre organisation.</span>
-        <small><a ui-sref="root.organization.producers({ organizationId: currentOrganization._id })">Ajouter</a></small>
     </div>
 
-    <div ng-if="currentOrganization.producers.length === 0" class="panel-footer clearfix">
+    <div class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-warning" ui-sref="root.organization.producers({ organizationId: currentOrganization._id })">Associer des producteurs</a>
+            <a class="btn btn-primary" ui-sref="root.organization.producers({ organizationId: currentOrganization._id })">Associer des producteurs</a>
         </div>
     </div>
 </div>
