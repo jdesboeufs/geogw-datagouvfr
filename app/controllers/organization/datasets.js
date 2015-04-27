@@ -64,10 +64,9 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
         });
     };
 
-    $scope.republishAll = function () {
-        $scope.datasets.forEach(function (dataset) {
-            if (!dataset.publication || ['public', 'private'].indexOf(dataset.publication.status) < 0) return;
-            $scope.publishDataset(dataset, dataset.publication.status);
+    $scope.syncAll = function () {
+        $http.post(organizationBaseUrl() + '/datasets/synchronize-all').success(function () {
+            refresh();
         });
     };
 
