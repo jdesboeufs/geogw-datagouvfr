@@ -8,10 +8,6 @@ angular.module('mainApp').controller('mainCtrl', function ($scope, $http) {
             });
             return organization;
         });
-
-        if ($scope.organizations.length === 1) {
-            $scope.selectCurrentOrganization($scope.organizations[0]);
-        }
     }
 
 });
