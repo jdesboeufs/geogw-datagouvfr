@@ -4,6 +4,9 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var cookieParser = require('cookie-parser');
+var httpProxy = require('http-proxy');
+
+var proxy = httpProxy.createProxyServer({ changeOrigin: true });
 
 // Configure mongoose
 require('./lib/config/mongoose');
@@ -13,6 +16,11 @@ require('./lib/config/passport');
 
 // Configure express
 var app = express();
+
+// Proxy to geogw (TEMP)
+app.use('/api/geogw', function (req, res) {
+    proxy.web(req, res, { target: process.env.GEOGW_URL + '/api' });
+});
 
 /* Assets */
 
