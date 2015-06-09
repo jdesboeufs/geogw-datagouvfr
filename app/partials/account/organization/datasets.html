@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
   <li><a ui-sref="root.home">Page d'accueil</a></li>
-  <li><a ui-sref="root.organization.index({ organizationId: currentOrganization._id })">{{ currentOrganization.name }}</a></li>
+  <li><a ui-sref="root.account.organization.index({ organizationId: currentOrganization._id })">{{ currentOrganization.name }}</a></li>
   <li class="active">Jeux de données</li>
 </ol>
 
@@ -98,6 +98,6 @@
 
 <nav>
   <ul class="pager">
-    <li class="previous"><a ui-sref="root.organization.index({ organizationId: currentOrganization._id })"><span aria-hidden="true">&larr;</span> Retour à la page précédente</a></li>
+    <li class="previous"><a ui-sref="root.account.organization.index({ organizationId: currentOrganization._id })"><span aria-hidden="true">&larr;</span> Retour à la page précédente</a></li>
   </ul>
 </nav>

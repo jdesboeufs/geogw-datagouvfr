@@ -15,7 +15,7 @@
     </div>
     <div class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-primary" ui-sref="root.organization.datasets({ organizationId: currentOrganization._id })">Publier des données</a>
+            <a class="btn btn-primary" ui-sref="root.account.organization.datasets({ organizationId: currentOrganization._id })">Publier des données</a>
         </div>
     </div>
 </div>
@@ -30,11 +30,11 @@
     </div>
     <div class="panel-body" ng-if="currentOrganization.sourceCatalog">
         Le catalogue <strong>{{ selectedCatalog().name }}</strong> est associé à votre organisation.
-        <small><a ui-sref="root.organization.catalog({ organizationId: currentOrganization._id })">Modifier</a></small>
+        <small><a ui-sref="root.account.organization.catalog({ organizationId: currentOrganization._id })">Modifier</a></small>
     </div>
     <div ng-if="!currentOrganization.sourceCatalog" class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-warning" ui-sref="root.organization.catalog({ organizationId: currentOrganization._id })">Choisir un catalogue</a>
+            <a class="btn btn-warning" ui-sref="root.account.organization.catalog({ organizationId: currentOrganization._id })">Choisir un catalogue</a>
         </div>
     </div>
 </div>
@@ -55,7 +55,7 @@
 
     <div class="panel-footer clearfix">
         <div class="pull-right">
-            <a class="btn btn-primary" ui-sref="root.organization.producers({ organizationId: currentOrganization._id })">Associer des producteurs</a>
+            <a class="btn btn-primary" ui-sref="root.account.organization.producers({ organizationId: currentOrganization._id })">Associer des producteurs</a>
         </div>
     </div>
 </div>

@@ -47,10 +47,12 @@ app.use(passport.session());
 
 app.get('/login', passport.authenticate('data.gouv.fr', { scope: 'default' }));
 
-app.get('/dgv/oauth/callback', passport.authenticate('data.gouv.fr', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-}));
+app.get('/dgv/oauth/callback', function (req, res) {
+    passport.authenticate('data.gouv.fr', {
+        successRedirect: '/account/organizations',
+        failureRedirect: '/'
+    })(req, res);
+});
 
 app.get('/logout', function (req, res){
   req.logout();

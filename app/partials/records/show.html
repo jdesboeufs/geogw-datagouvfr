@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
   <li>Accueil</li>
-  <li><a href="/services">Services</a></li>
-  <li><a href="/services/{{ currentService._id }}/datasets">{{ currentService.name }}</a></li>
+  <li><a ui-sref="root.services({ serviceProtocol: 'csw' })">Services</a></li>
+  <li><a ui-sref="root.service.records({ serviceId: currentService._id })">{{ currentService.name }}</a></li>
   <li class="active">{{ dataset.metadata.title }}</li>
 </ol>
 

@@ -63,7 +63,18 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             templateUrl: '/partials/home.html',
             controller: 'mainCtrl'
         })
-        .state('root.organization', {
+        .state('root.account', {
+            url: 'account',
+            abstract: true,
+            template: '<ui-view></ui-view>',
+            controller: _.noop
+        })
+        .state('root.account.organizations', {
+            url: '/organizations',
+            templateUrl: '/partials/account/organizations.html',
+            controller: 'AccountOrganizations'
+        })
+        .state('root.account.organization', {
             url: 'org/:organizationId',
             abstract: true,
             template: '<ui-view></ui-view>',
@@ -80,19 +91,19 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('root.organization.index', {
+        .state('root.account.organization.index', {
             url: '',
-            templateUrl: '/partials/organization/index.html',
+            templateUrl: '/partials/account/organization/index.html',
             controller: 'OrganizationIndex'
         })
-        .state('root.organization.catalog', {
+        .state('root.account.organization.catalog', {
             url: '/catalog-selection',
-            templateUrl: '/partials/organization/catalog.html',
+            templateUrl: '/partials/account/organization/catalog.html',
             controller: 'OrganizationCatalog'
         })
-        .state('root.organization.producers', {
+        .state('root.account.organization.producers', {
             url: '/producers',
-            templateUrl: '/partials/organization/producers.html',
+            templateUrl: '/partials/account/organization/producers.html',
             controller: 'OrganizationProducers',
             resolve: {
                 associatedProducers: function ($http) {
@@ -102,9 +113,9 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('root.organization.datasets', {
+        .state('root.account.organization.datasets', {
             url: '/datasets',
-            templateUrl: '/partials/organization/datasets.html',
+            templateUrl: '/partials/account/organization/datasets.html',
             controller: 'OrganizationDatasets'
         })
         .state('root.services', {
