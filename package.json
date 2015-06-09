@@ -18,7 +18,7 @@
     "datasets"
   ],
   "author": "Jérôme Desboeufs <jerome.desboeufs@gmail.com>",
-  "license": "AGPL",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/jdesboeufs/geogw-datagouvfr/issues"
   },
