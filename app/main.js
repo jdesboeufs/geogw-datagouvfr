@@ -75,7 +75,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'AccountOrganizations'
         })
         .state('root.account.organization', {
-            url: 'org/:organizationId',
+            url: '/organization/:organizationId',
             abstract: true,
             template: '<ui-view></ui-view>',
             controller: function ($scope, organization) {
