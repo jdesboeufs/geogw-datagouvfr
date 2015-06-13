@@ -28,6 +28,13 @@ mainApp.filter('prune', function () {
     };
 });
 
+mainApp.run(function ($rootScope, $location, $window) {
+     $rootScope.$on('$stateChangeSuccess', function (e) {
+        if (!$window.ga) return;
+        $window.ga('send', 'pageview', { page: $location.path() });
+    });
+});
+
 mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode({ enabled: true, requireBase: false });
     
