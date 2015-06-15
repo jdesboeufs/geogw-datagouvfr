@@ -64,6 +64,12 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
         });
     };
 
+    $scope.publishAll = function () {
+        $http.post(organizationBaseUrl() + '/datasets/publish-all').success(function () {
+            refresh();
+        });
+    };
+
     $scope.syncAll = function () {
         $http.post(organizationBaseUrl() + '/datasets/synchronize-all').success(function () {
             refresh();
