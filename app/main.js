@@ -29,7 +29,7 @@ mainApp.filter('prune', function () {
 });
 
 mainApp.run(function ($rootScope, $location, $window) {
-     $rootScope.$on('$stateChangeSuccess', function (e) {
+     $rootScope.$on('$stateChangeSuccess', function () {
         if (!$window.ga) return;
         $window.ga('send', 'pageview', { page: $location.path() });
     });
