@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.initConfig({
 
@@ -43,22 +43,12 @@ module.exports = function(grunt) {
                 unused: true,
                 trailing: true,
             }
-        }//,
-
-        // clean: ['.tmp', 'dist'],
-
-        // browserify: {
-        //     app: {
-        //         src: 'app/scripts/main.js',
-        //         dest: '.tmp/scripts/bundle.js'
-        //     }
-        // }
+        }
 
     });
 
     grunt.registerTask('default', [
-        'jshint'//,
-        //'browserify:app'
+        'jshint'
     ]);
 
     grunt.registerTask('test', ['jshint']);
