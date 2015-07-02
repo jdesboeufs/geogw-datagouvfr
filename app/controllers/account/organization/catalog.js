@@ -1,6 +1,6 @@
 angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $http, $location, $state) {
 
-    $http.get('/api/catalogs').success(function (data) {
+    $http.get('/api/geogw/services/by-protocol/csw').success(function (data) {
         $scope.catalogs = data;
     });
 
