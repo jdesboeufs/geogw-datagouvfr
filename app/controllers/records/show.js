@@ -28,11 +28,16 @@ angular.module('mainApp').controller('Record', function($scope, $http, $statePar
         if (mostRecent.metadata._updated > $scope.dataset.metadata._updated) $scope.moreRecent = mostRecent;
     });
 
-    $scope.encodeURIComponent = encodeURIComponent;
-
-    $scope.forceReprocess = function () {
-        $http.post('/api/geogw/services/' + $stateParams.serviceId + '/datasets/' + $stateParams.datasetId + '/force-reprocess').success(function () {
-            // Do nothing
-        });
+    $scope.downloadLink = function (dist, format, projection) {
+        var baseUrl = '/api/geogw';
+        if (dist.type === 'file-package') {
+            baseUrl += '/file-packages/' + dist.hashedLocation;
+        }
+        if (dist.type === 'wfs-featureType') {
+            baseUrl += '/services/' + dist.service + '/feature-types/' + dist.typeName;
+        }
+        return baseUrl + '/download?format=' + format + '&projection=' + projection;
     };
+
+    $scope.encodeURIComponent = encodeURIComponent;
 });

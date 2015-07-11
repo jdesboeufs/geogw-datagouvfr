@@ -22,6 +22,45 @@
 
     <div class="row">
       <div class="col-lg-7">
+
+        <h3><i class="fa fa-download"></i> Téléchargement</h3>
+
+        <p ng-if="dataset.dataset.distributions.length === 0">
+          Aucun lien de téléchargement n'est défini pour ce jeu de données.
+        </p>
+
+        <table class="table table-condensed table-bordered" ng-if="dataset.dataset.distributions.length > 0">
+          <tr ng-repeat="dist in dataset.dataset.distributions">
+            <td>{{ dist.type }}</td>
+            <td>
+              <div ng-if="dist.type === 'file-package'">
+                <div ng-if="dist.available">
+                  <a target="_blank" href="{{ dist.location }}">Archive source</a><br>
+                  <small>
+                    [<a target="_blank" href="{{ downloadLink(dist, 'GeoJSON', 'WGS84') }}">GeoJSON</a>]
+                    [<a target="_blank" href="{{ downloadLink(dist, 'SHP', 'Lambert93') }}">SHP</a>]
+                    [<a target="_blank" href="{{ downloadLink(dist, 'KML', 'WGS84') }}">KML</a>]
+                    [<a target="_blank" href="{{ downloadLink(dist, 'CSV', 'WGS84') }}">CSV</a>]
+                  </small>
+                </div>
+                <s ng-if="!dist.available">Archive source</s>
+              </div>
+              <div ng-if="dist.type === 'wfs-featureType'">
+                <div ng-if="dist.available">
+                  <a target="_blank" href="/api/geogw/services/{{ dist.service }}/feature-types/{{ dist.typeName }}">{{ dist.typeName }}</a><br>
+                  <small>
+                    [<a target="_blank" href="{{ downloadLink(dist, 'GeoJSON', 'WGS84') }}">GeoJSON</a>]
+                    [<a target="_blank" href="{{ downloadLink(dist, 'SHP', 'Lambert93') }}">SHP</a>]
+                    [<a target="_blank" href="{{ downloadLink(dist, 'KML', 'WGS84') }}">KML</a>]
+                    [<a target="_blank" href="{{ downloadLink(dist, 'CSV', 'WGS84') }}">CSV</a>]
+                  </small>
+                </div>
+                <s ng-if="!dist.available">{{ dist.typeName }}</s>
+              </div>
+            </td>
+          </tr>
+        </table>
+
         <h3><i class="fa fa-briefcase"></i> Organisations associées</h3>
         <div class="panel panel-default" ng-repeat="contact in dataset.metadata.contacts.concat(dataset.metadata._contacts)">
           <div class="panel-heading">
@@ -39,8 +78,8 @@
         <h3><i class="fa fa-tags"></i> Mots-clés</h3>
         <div><span ng-repeat="keyword in dataset.metadata.keywords"><span class="label label-info">{{ keyword }}</span> </span></div>
 
-        <h3><i class="fa fa-download"></i> Ressources</h3>
-        <div ng-repeat="resource in dataset.metadata.onlineResources"><a title="{{ resource.protocol }}" href="{{ resource.link }}">{{ resource.name || resource.link }}</a></div>
+        <h3><i class="fa fa-file"></i> Autres liens</h3>
+        <div ng-repeat="resource in dataset.alternateResources"><a href="{{ resource.link }}">{{ resource.name || resource.link }}</a></div>
 
       </div>
     </div>
@@ -63,13 +102,6 @@
           </li>
         </ul>
       </div>
-    </div>
-
-    <div>
-      <h3>Administration</h3>
-      <ul>
-        <li><button class="btn-link" ng-click="forceReprocess()">Mettre à jour les références</button></li>
-      </ul>
     </div>
   </div>
 
