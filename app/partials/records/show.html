@@ -35,7 +35,7 @@
             <td>
               <div ng-if="dist.type === 'file-package'">
                 <div ng-if="dist.available">
-                  <a target="_blank" href="{{ dist.location }}">Archive source</a><br>
+                  <a target="_blank" href="{{ dist.location }}">{{ dist.name }}</a><br>
                   <small>
                     [<a target="_blank" href="{{ downloadLink(dist, 'GeoJSON', 'WGS84') }}">GeoJSON</a>]
                     [<a target="_blank" href="{{ downloadLink(dist, 'SHP', 'Lambert93') }}">SHP</a>]
@@ -43,7 +43,7 @@
                     [<a target="_blank" href="{{ downloadLink(dist, 'CSV', 'WGS84') }}">CSV</a>]
                   </small>
                 </div>
-                <s ng-if="!dist.available">Archive source</s>
+                <s ng-if="!dist.available">{{ dist.name }}</s>
               </div>
               <div ng-if="dist.type === 'wfs-featureType'">
                 <div ng-if="dist.available">
@@ -79,7 +79,7 @@
         <div><span ng-repeat="keyword in dataset.metadata.keywords"><span class="label label-info">{{ keyword }}</span> </span></div>
 
         <h3><i class="fa fa-file"></i> Autres liens</h3>
-        <div ng-repeat="resource in dataset.alternateResources"><a href="{{ resource.link }}">{{ resource.name || resource.link }}</a></div>
+        <div ng-repeat="resource in dataset.alternateResources"><a href="{{ resource.location }}">{{ resource.name || resource.location }}</a></div>
 
       </div>
     </div>
