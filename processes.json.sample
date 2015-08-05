@@ -35,7 +35,6 @@
         "REDIS_HOST": "localhost",
         "REDIS_PORT": 6379,
         "HTTP_AGENT_NAME": "GeoGw 0.1",
-        "PORT": 5100,
         "KUE_PREFIX": "q",
         "DATAGOUV_URL": "https://demo.data.gouv.fr",
         "ROOT_URL": "http://localhost:5000"
