@@ -35,7 +35,7 @@
             <td>
               <div ng-if="dist.type === 'file-package'">
                 <div ng-if="dist.available">
-                  <a target="_blank" href="{{ dist.location }}">{{ dist.name }}</a><br>
+                  <a target="_blank" href="{{ dist.location }}">{{ dist.layer }}</a><br>
                   <small>
                     [<a target="_blank" href="{{ downloadLink(dist, 'GeoJSON', 'WGS84') }}">GeoJSON</a>]
                     [<a target="_blank" href="{{ downloadLink(dist, 'SHP', 'Lambert93') }}">SHP</a>]

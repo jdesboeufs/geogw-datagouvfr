@@ -31,7 +31,7 @@ angular.module('mainApp').controller('Record', function($scope, $http, $statePar
     $scope.downloadLink = function (dist, format, projection) {
         var baseUrl = '/api/geogw';
         if (dist.type === 'file-package') {
-            baseUrl += '/file-packages/' + dist.hashedLocation;
+            baseUrl += '/file-packages/' + dist.hashedLocation + '/' + dist.layer;
         }
         if (dist.type === 'wfs-featureType') {
             baseUrl += '/services/' + dist.service + '/feature-types/' + dist.typeName;
