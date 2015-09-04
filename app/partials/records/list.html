@@ -1,7 +1,8 @@
 <ol class="breadcrumb">
   <li>Accueil</li>
   <li><a href="/services">Services</a></li>
-  <li class="active">{{ currentService.name }}</li>
+  <li ng-if="currentService" class="active">{{ currentService.name }}</li>
+  <li ng-if="!currentService" class="active">Recherche globale</li>
 </ol>
 
 <div class="row">
@@ -23,7 +24,10 @@
       <div ng-if="dataset.metadata.graphicOverviews[0]" class="pull-right">
         <img ng-src="{{ dataset.metadata.graphicOverviews[0].fileName }}" class="img-responsive img-thumbnail" style="max-height:128px">
       </div>
-      <h5><a ui-sref="root.service.record({ serviceId: currentService._id, recordId: dataset.hashedId })">{{ dataset.metadata.title }}</a></h5>
+      <h5>
+        <a ng-if="currentService" ui-sref="root.service.record({ serviceId: currentService._id, recordId: dataset.recordId })">{{ dataset.metadata.title }}</a>
+        <a ng-if="!currentService" ui-sref="root.record({ recordId: dataset.recordId })">{{ dataset.metadata.title }}</a>
+      </h5>
       <p>{{ dataset.metadata.abstract | prune:500 }}</p>
       <div class="small">
         <div ng-if="dataset.metadata.keywords">

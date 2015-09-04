@@ -1,7 +1,10 @@
 <ol class="breadcrumb">
   <li>Accueil</li>
   <li><a ui-sref="root.services({ serviceProtocol: 'csw' })">Services</a></li>
-  <li><a ui-sref="root.service.records({ serviceId: currentService._id })">{{ currentService.name }}</a></li>
+  <li>
+    <a ng-if="currentService" ui-sref="root.service.records({ serviceId: currentService._id })">{{ currentService.name }}</a>
+    <a ng-if="!currentService" ui-sref="root.records">Recherche globale</a>
+  </li>
   <li class="active">{{ dataset.metadata.title }}</li>
 </ol>
 
@@ -88,20 +91,6 @@
   <div class="col-lg-4">
     <div ng-if="dataset.metadata.graphicOverviews[0]">
       <img ng-src="{{ dataset.metadata.graphicOverviews[0].fileName }}" class="img-responsive img-thumbnail">
-    </div>
-
-    <div>
-      <h3>Diffusion</h3>
-      <p ng-if="sameIdentifierDatasets.length === 0">Ce jeu de données n'est disponible que dans ce catalogue.</p>
-      <div ng-if="sameIdentifierDatasets.length > 0">
-        <p>Ce jeu de données est aussi disponible dans les catalogues suivantes :</p>
-        <ul>
-          <li ng-repeat="altDataset in sameIdentifierDatasets">
-            <a href="/services/{{ altDataset.parentCatalog._id }}/datasets/{{ altDataset._id }}">{{ altDataset.parentCatalog.name }}</a><br>
-            <span style="font-size: 85%"><em>(dernière mise à jour {{ altDataset.metadata._updated | timeago }})</em></span>
-          </li>
-        </ul>
-      </div>
     </div>
   </div>
 

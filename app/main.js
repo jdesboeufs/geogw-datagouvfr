@@ -152,6 +152,17 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('root.records', {
+            url: 'records?keyword&organization&type&representationType&opendata&availability&distributionFormat&catalog&q&offset',
+            templateUrl: '/partials/records/list.html',
+            controller: 'ServiceRecords',
+            reloadOnSearch: false,
+            params: {
+                keyword: { array: true },
+                organization: { array: true },
+                distributionFormat: { array: true }
+            }
+        })
         .state('root.service.records', {
             url: '/records?keyword&organization&type&representationType&opendata&availability&distributionFormat&q&offset',
             templateUrl: '/partials/records/list.html',
@@ -163,13 +174,25 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 distributionFormat: { array: true }
             }
         })
+        .state('root.record', {
+            url: 'records/:recordId',
+            templateUrl: '/partials/records/show.html',
+            controller: 'Record',
+            resolve: {
+                record: function ($stateParams, $http) {
+                    return $http.get('/api/geogw/records/' + $stateParams.recordId).then(function (result) {
+                        return result.data;
+                    });
+                }
+            }
+        })
         .state('root.service.record', {
             url: '/records/:recordId',
             templateUrl: '/partials/records/show.html',
             controller: 'Record',
             resolve: {
                 record: function ($stateParams, $http) {
-                    return $http.get('/api/geogw/services/' + $stateParams.serviceId + '/datasets/' + $stateParams.recordId).then(function (result) {
+                    return $http.get('/api/geogw/records/' + $stateParams.recordId).then(function (result) {
                         return result.data;
                     });
                 }

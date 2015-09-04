@@ -77,8 +77,9 @@ angular.module('mainApp').controller('ServiceRecords', function ($scope, $http, 
     }
 
     $scope.fetchDatasets = function() {
+        var baseUrl = $scope.currentService ? '/api/geogw/services/' + $scope.currentService._id + '/records' : '/api/geogw/records';
         $http
-            .get('/api/geogw/services/' + $scope.currentService._id + '/records', { params: buildQueryString() })
+            .get(baseUrl, { params: buildQueryString() })
             .success(function(data) {
                 $scope.datasets = data.results;
                 $scope.count = data.count;
