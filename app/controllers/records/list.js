@@ -45,6 +45,10 @@ var facetsDef = [
         label: 'Mot-clés'
     },
     {
+        name: 'catalog',
+        label: 'Catalogue'
+    },
+    {
         name: 'distributionFormat',
         label: 'Format de distribution',
         valueLabels: {
@@ -74,7 +78,7 @@ angular.module('mainApp').controller('ServiceRecords', function ($scope, $http, 
 
     $scope.fetchDatasets = function() {
         $http
-            .get('/api/geogw/services/' + $scope.currentService._id + '/datasets', { params: buildQueryString() })
+            .get('/api/geogw/services/' + $scope.currentService._id + '/records', { params: buildQueryString() })
             .success(function(data) {
                 $scope.datasets = data.results;
                 $scope.count = data.count;
