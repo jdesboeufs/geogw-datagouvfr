@@ -160,7 +160,8 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             params: {
                 keyword: { array: true },
                 organization: { array: true },
-                distributionFormat: { array: true }
+                distributionFormat: { array: true },
+                catalog: { array: true }
             }
         })
         .state('root.service.records', {

@@ -61,7 +61,7 @@ var facetsDef = [
 angular.module('mainApp').controller('ServiceRecords', function ($scope, $http, $location, $stateParams) {
     function buildQueryString() {
         if (!$scope.datasets) {
-            return _.pick($stateParams, 'organization', 'keyword', 'type', 'representationType', 'opendata', 'availability', 'distributionFormat', 'q', 'offset');
+            return _.pick($stateParams, 'catalog', 'organization', 'keyword', 'type', 'representationType', 'opendata', 'availability', 'distributionFormat', 'q', 'offset');
         } else {
             var qs = {};
             $scope.activeFacets.forEach(function (activeFacet) {
