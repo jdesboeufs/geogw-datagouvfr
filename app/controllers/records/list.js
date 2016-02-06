@@ -4,6 +4,7 @@ var facetsDef = [
         label: 'Type de résultat',
         valueLabels: {
             dataset: 'Jeu de données',
+            nonGeographicDataset: 'Jeu de données (non géographiques)',
             service: 'Service',
             map: 'Carte',
             other: 'Autre',

@@ -20,7 +20,7 @@
       <div>Une version plus récente existe sur le catalogue <strong>{{ moreRecent.parentCatalog.name }}</strong>.</div>
       <div><a href="/services/{{ moreRecent.parentCatalog._id }}/datasets/{{ moreRecent._id }}">Cliquez ici pour y accéder</a></div>
     </div>
-    <p>{{ dataset.metadata.abstract }}</p>
+    <p>{{ dataset.metadata.description }}</p>
     <hr>
 
     <div class="row">
@@ -81,8 +81,8 @@
         <h3><i class="fa fa-tags"></i> Mots-clés</h3>
         <div><span ng-repeat="keyword in dataset.metadata.keywords"><span class="label label-info">{{ keyword }}</span> </span></div>
 
-        <h3><i class="fa fa-file"></i> Autres liens</h3>
-        <div ng-repeat="resource in dataset.alternateResources"><a href="{{ resource.location }}">{{ resource.name || resource.location }}</a></div>
+        <h3><i class="fa fa-file"></i> Liens</h3>
+        <div ng-repeat="link in dataset.metadata.links"><a href="{{ link.href }}">{{ link.name || link.href }}</a></div>
 
       </div>
     </div>

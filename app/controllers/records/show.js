@@ -3,7 +3,8 @@ angular.module('mainApp').controller('Record', function($scope, $http, $statePar
 
     $scope.datasetTypes = {
         series: 'Série de données',
-        dataset: 'Jeu de données'
+        dataset: 'Jeu de données',
+        nonGeographicDataset: 'Jeu de données non géographiques'
     };
 
     $scope.contactTypes = {

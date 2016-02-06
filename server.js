@@ -1,23 +1,25 @@
-var express = require('express');
-var morgan = require('morgan');
+const express = require('express');
+const httpProxy = require('http-proxy');
 
-var app = express();
+const app = express();
+const proxy = httpProxy.createProxyServer({});
+const port = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', true);
-    app.use(morgan(':req[x-real-ip] - - [:date] ":method :url HTTP/:http-version" :status - :response-time ms - :res[content-length] ":referrer"'));
-} else {
-    app.use(morgan('dev'));
 }
 
 app.use(express.static(__dirname + '/app'));
 
-app.use(require('geogw/app'));
+
+app.use('/api', function (req, res) {
+    proxy.web(req, res, { target: process.env.GEOGW_ROOT_URL || 'http://localhost:5000/api' });
+});
 
 app.get('*', function (req, res) {
     res.sendFile(__dirname + '/app/views/layout.html');
 });
 
-app.listen(process.env.PORT, function () {
-    console.log('Now listing on port %d', process.env.PORT);
+app.listen(port, function () {
+    console.log('Now listing on port %d', port);
 });

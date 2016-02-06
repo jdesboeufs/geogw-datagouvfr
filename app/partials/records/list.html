@@ -28,7 +28,7 @@
         <a ng-if="currentService" ui-sref="root.service.record({ serviceId: currentService._id, recordId: dataset.recordId })">{{ dataset.metadata.title }}</a>
         <a ng-if="!currentService" ui-sref="root.record({ recordId: dataset.recordId })">{{ dataset.metadata.title }}</a>
       </h5>
-      <p>{{ dataset.metadata.abstract | prune:500 }}</p>
+      <p>{{ dataset.metadata.description | prune:500 }}</p>
       <div class="small">
         <div ng-if="dataset.metadata.keywords">
           <strong><i class="fa fa-tag"></i> Mots-clés :</strong>

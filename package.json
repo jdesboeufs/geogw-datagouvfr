@@ -4,7 +4,7 @@
   "description": "Publish geogw datasets on data.gouv.fr",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "start": "node server"
   },
   "repository": {
     "type": "git",
@@ -25,11 +25,6 @@
   "homepage": "https://github.com/jdesboeufs/geogw-datagouvfr",
   "dependencies": {
     "express": "^4.11.2",
-    "geogw": "jdesboeufs/geogw",
-    "morgan": "^1.5.1"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.10.0"
+    "http-proxy": "^1.13.0"
   }
 }
