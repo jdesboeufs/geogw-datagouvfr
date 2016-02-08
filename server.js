@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/app'));
 
 
 app.use('/api', function (req, res) {
-    proxy.web(req, res, { target: process.env.GEOGW_ROOT_URL || 'http://localhost:5000/api' });
+    proxy.web(req, res, { changeOrigin: true, target: process.env.GEOGW_ROOT_URL || 'http://localhost:5000/api' });
 });
 
 app.get('*', function (req, res) {
