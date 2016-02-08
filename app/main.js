@@ -9,6 +9,15 @@ mainApp.filter('duration', function () {
     };
 });
 
+marked.setOptions({ sanitize: true });
+
+mainApp.filter('marked', function ($sce) {
+    return function (value) {
+        if (!value) return '';
+        return $sce.trustAsHtml(marked(value.replace(/\r\n/gi, '@##@').replace(/\r\n/gi, '@##@')).replace(/@##@/gi, '<br>'));
+    };
+});
+
 mainApp.filter('timeago', function () {
     return function (value) {
         if (!value) return '';
@@ -37,7 +46,7 @@ mainApp.run(function ($rootScope, $location, $window) {
 
 mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode({ enabled: true, requireBase: false });
-    
+
     $urlRouterProvider
         .when('/services', '/services/by-protocol/csw')
         .otherwise('/');

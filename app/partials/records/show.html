@@ -14,13 +14,15 @@
     <h1>{{ dataset.metadata.title }}</h1>
     <p>
       Type : <strong>{{ datasetTypes[dataset.metadata.type] }}</strong> -
-      Dernière mise à jour : <em>{{ dataset.metadata._updated | timeago }}</em>
+      Licence : <strong>{{ licenseLabel(dataset.metadata.license) }}</strong> -
+      Dernière mise à jour de la fiche : <strong>{{ dataset.revisionDate | timeago }}</strong>
     </p>
     <div class="alert alert-warning" ng-if="moreRecent">
       <div>Une version plus récente existe sur le catalogue <strong>{{ moreRecent.parentCatalog.name }}</strong>.</div>
       <div><a href="/services/{{ moreRecent.parentCatalog._id }}/datasets/{{ moreRecent._id }}">Cliquez ici pour y accéder</a></div>
     </div>
-    <p>{{ dataset.metadata.description }}</p>
+    <div ng-bind-html="dataset.metadata.description | marked"></div>
+    <p>Identifiant technique de la fiche : {{ dataset.metadata.id }}</p>
     <hr>
 
     <div class="row">

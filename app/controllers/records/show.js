@@ -22,6 +22,16 @@ angular.module('mainApp').controller('Record', function($scope, $http, $statePar
         author: 'Auteur'
     };
 
+    var licenses = {
+        'fr-lo': 'Licence Ouverte',
+        'odc-odbl': 'ODbL 1.0'
+    };
+
+    $scope.licenseLabel = function (license) {
+        if (license in licenses) return licenses[license];
+        return 'Non déterminée';
+    };
+
     $scope.downloadLink = function (dist, format, projection) {
         var baseUrl = '/api/geogw';
         if (dist.type === 'file-package') {
