@@ -38,7 +38,7 @@
           <tr ng-repeat="dist in dataset.dataset.distributions">
             <td>{{ dist.type }}</td>
             <td>
-              <div ng-if="dist.type === 'file-package'">
+              <div ng-if="dist.type === 'file-package' && !dist.originalDistribution">
                 <div ng-if="dist.available">
                   <a target="_blank" href="{{ dist.location }}">{{ dist.layer }}</a><br>
                   <small>
@@ -47,6 +47,12 @@
                     [<a target="_blank" href="{{ downloadLink(dist, 'KML', 'WGS84') }}">KML</a>]
                     [<a target="_blank" href="{{ downloadLink(dist, 'CSV', 'WGS84') }}">CSV</a>]
                   </small>
+                </div>
+                <s ng-if="!dist.available">{{ dist.name }}</s>
+              </div>
+              <div ng-if="dist.type === 'file-package' && dist.originalDistribution">
+                <div ng-if="dist.available">
+                  <a target="_blank" href="{{ dist.location }}">{{ dist.name }}</a><br>
                 </div>
                 <s ng-if="!dist.available">{{ dist.name }}</s>
               </div>
