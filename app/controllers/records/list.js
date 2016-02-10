@@ -136,7 +136,7 @@ angular.module('mainApp').controller('ServiceRecords', function ($scope, $http, 
     };
 
     $scope.facetIsActive = function (facet) {
-        return _.find($scope.activeFacets, facet);
+        return !!_.find($scope.activeFacets, facet);
     };
 
     $scope.applyFacet = function (facet) {
