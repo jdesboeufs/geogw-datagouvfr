@@ -162,7 +162,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             }
         })
         .state('root.records', {
-            url: 'records?keyword&organization&type&representationType&opendata&availability&distributionFormat&catalog&q&offset',
+            url: 'records?metadataType&keyword&organization&type&representationType&opendata&availability&distributionFormat&catalog&q&offset',
             templateUrl: '/partials/records/list.html',
             controller: 'ServiceRecords',
             reloadOnSearch: false,
@@ -174,7 +174,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             }
         })
         .state('root.service.records', {
-            url: '/records?keyword&organization&type&representationType&opendata&availability&distributionFormat&q&offset',
+            url: '/records?metadataType&keyword&organization&type&representationType&opendata&availability&distributionFormat&q&offset',
             templateUrl: '/partials/records/list.html',
             controller: 'ServiceRecords',
             reloadOnSearch: false,
