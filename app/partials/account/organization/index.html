@@ -5,14 +5,14 @@
 </ol>
 
 <!-- Datasets -->
-<div class="panel panel-primary" ng-if="datasetMetrics.total > 0">
+<div class="panel panel-primary" ng-if="ready()">
     <div class="panel-heading">
         <h2 class="panel-title"><i class="fa fa-cubes"></i> Jeux de données</h2>
     </div>
     <div class="panel-body">
-        <p><strong>{{ datasetMetrics['published-public'] || 0 }}</strong> jeux de données sont <strong>publiés et accessibles</strong> sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.<br/>
-        <strong>{{ datasetMetrics['published-private'] || 0 }}</strong> jeux de données sont en <strong>mode privé</strong>.<br/>
-        <strong>{{ datasetMetrics['not-published'] || 0 }}</strong> jeux de données sont <strong>en attente de publication</strong>.</p>
+        <p><strong>{{ datasetMetrics.published.public || 0 }}</strong> jeux de données sont <strong>publiés et accessibles</strong> sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.<br/>
+        <strong>{{ datasetMetrics.published.private || 0 }}</strong> jeux de données sont en <strong>mode privé</strong>.<br/>
+        <strong>{{ datasetMetrics.notPublishedYet || 0 }}</strong> jeux de données sont <strong>en attente de publication</strong>.</p>
     </div>
     <div class="panel-footer clearfix">
         <div class="pull-right">
@@ -57,29 +57,6 @@
     <div class="panel-footer clearfix">
         <div class="pull-right">
             <a class="btn btn-primary" ui-sref="root.account.organization.producers({ organizationId: currentOrganization._id })">Associer des producteurs</a>
-        </div>
-    </div>
-</div>
-
-<!-- Synchronization -->
-<div class="panel panel-primary" ng-if="syncable()">
-    <div class="panel-heading">
-        <h2 class="panel-title"><i class="fa fa-refresh" ng-class="{ 'fa-spin': syncing }"></i> Synchronisation</h2>
-    </div>
-    <div class="panel-body">
-        <p ng-if="!syncing">
-            Pour le moment la synchronisation des données pouvant être publiées est <strong>manuelle</strong>.<br/>
-            Merci d'utiliser le bouton suivant lorsque vous ajoutez de nouvelles données ouvertes sur votre catalogue ou si vous associez de nouveaux producteurs.
-        </p>
-        <div class="progress" ng-if="syncing">
-            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
-                <span class="sr-only">Synchronisation en cours</span>
-            </div>
-        </div>
-    </div>
-    <div class="panel-footer clearfix">
-        <div class="pull-right">
-            <button class="btn btn-primary" ng-click="synchronize()">Synchroniser</button>
         </div>
     </div>
 </div>

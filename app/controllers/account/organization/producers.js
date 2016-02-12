@@ -35,6 +35,7 @@ angular.module('mainApp').controller('OrganizationProducers', function ($scope, 
         $http.post(organizationBaseUrl() + '/producers', { _id: producer._id })
             .success(function () {
                 producer.associatedTo = $scope.currentOrganization;
+                $scope.currentOrganization.producers.push({ _id: producer._id });
                 updateProducerGroups();
             });
     };
@@ -43,6 +44,9 @@ angular.module('mainApp').controller('OrganizationProducers', function ($scope, 
         $http.delete(organizationBaseUrl() + '/producers/' + encodeURIComponent(producer._id))
             .success(function () {
                 producer.associatedTo = null;
+                _.remove($scope.currentOrganization.producers, function (p) {
+                    return p._id === producer._id;
+                });
                 updateProducerGroups();
             });
     };

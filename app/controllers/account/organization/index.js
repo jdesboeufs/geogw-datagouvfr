@@ -18,37 +18,15 @@ angular.module('mainApp').controller('OrganizationIndex', function ($scope, $htt
     }
 
     $scope.refreshMetrics = function () {
-        $http.get(organizationBaseUrl() + '/datasets').success(function (data) {
-            var metrics = _(data)
-                .groupBy(function (dataset) {
-                    if (!dataset.publication || !dataset.publication._id) return 'not-published';
-                    if (dataset.publication.organization._id !== $scope.currentOrganization._id) return 'published-by-other';
-                    return dataset.publication.status === 'public' ? 'published-public' : 'published-private';
-                })
-                .mapValues(function (list) {
-                    return list.length;
-                })
-                .value();
-
-            metrics.total = data.length;
-            $scope.datasetMetrics = metrics;
+        $http.get(organizationBaseUrl() + '/datasets/metrics').success(function (data) {
+            $scope.datasetMetrics = data;
         });
     };
 
     $scope.refreshMetrics();
 
-    $scope.syncable = function () {
-        return ($scope.datasetMetrics.total > 0) || ($scope.currentOrganization.producers.length > 0 && $scope.currentOrganization.sourceCatalog);
-    };
-
-    $scope.synchronize = function () {
-        $scope.syncing = true;
-        $http.post(organizationBaseUrl() + '/synchronize', {}).success(function () {
-            $timeout(function () {
-                $scope.syncing = false;
-                $scope.refreshMetrics();
-            }, 3000);
-        });
+    $scope.ready = function () {
+        return $scope.currentOrganization.sourceCatalog && $scope.currentOrganization.producers.length > 0
     };
 
 });
