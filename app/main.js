@@ -79,8 +79,8 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             templateUrl: '/partials/home.html',
             controller: 'mainCtrl',
             resolve: {
-                statistics: function ($http) {
-                    return $http.get('/api/datasets/statistics').then(function (result) {
+                metrics: function ($http) {
+                    return $http.get('/api/datasets/metrics').then(function (result) {
                         return result.data;
                     });
                 }

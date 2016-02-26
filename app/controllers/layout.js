@@ -1,4 +1,3 @@
-angular.module('mainApp').controller('mainCtrl', function ($scope, statistics) {
-	$scope.statistics = statistics;
-	$scope.organizations = _.filter(statistics.organizations, 'featured');
+angular.module('mainApp').controller('mainCtrl', function ($scope, metrics) {
+	$scope.metrics = metrics;
 });
