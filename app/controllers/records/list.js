@@ -38,6 +38,15 @@ var facetsDef = [
         }
     },
     {
+        name: 'dgvPublication',
+        label: 'Publié sur data.gouv.fr',
+        valueLabels: {
+            public: 'Oui',
+            private: 'Oui (en privé)',
+            no: 'Non'
+        }
+    },
+    {
         name: 'organization',
         label: 'Organismes'
     },
@@ -66,7 +75,7 @@ var facetsDef = [
 angular.module('mainApp').controller('ServiceRecords', function ($scope, $http, $location, $stateParams) {
     function buildQueryString() {
         if (!$scope.datasets) {
-            return _.pick($stateParams, 'metadataType', 'catalog', 'organization', 'keyword', 'type', 'representationType', 'opendata', 'availability', 'distributionFormat', 'q', 'offset');
+            return _.pick($stateParams, 'dgvPublication', 'metadataType', 'catalog', 'organization', 'keyword', 'type', 'representationType', 'opendata', 'availability', 'distributionFormat', 'q', 'offset');
         } else {
             var qs = {};
             $scope.activeFacets.forEach(function (activeFacet) {
