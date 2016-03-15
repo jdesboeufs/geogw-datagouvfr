@@ -20,7 +20,8 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
 
     $scope.publicationStatus = function (dataset) {
         if (!dataset.publication || !dataset.publication._id) return 'not-published';
-        if (dataset.publication.organization._id !== $scope.currentOrganization._id) return 'published-by-other';
+        console.log(dataset.publication.organization, $scope.currentOrganization._id, dataset.publication.organization === $scope.currentOrganization._id);
+        if (dataset.publication.organization !== $scope.currentOrganization._id) return 'published-by-other';
         return dataset.publication.status === 'public' ? 'published-public' : 'published-private';
     };
 
@@ -44,7 +45,6 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
         }).success(function (data) {
             dataset.syncing = false;
             dataset.publication = data;
-            dataset.publication.organization = $scope.currentOrganization; // Dataset operations doesn't populate organization
             $scope.updateDatasetGroups();
         }).error(function () {
             dataset.syncing = false;
