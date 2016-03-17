@@ -9,92 +9,51 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h2 class="panel-title">
-            <span ng-if="groupedDatasets['not-published']" class="pull-right"><span class="badge">{{ groupedDatasets['not-published'].length }}</span></span>
+            <span ng-if="notPublished.length" class="pull-right"><span class="badge">{{ notPublished.length }}</span></span>
             <i class="fa fa-cubes"></i> Données en attente de publication
         </h2>
     </div>
-    <div class="panel-body" ng-if="!groupedDatasets['not-published']">
+    <div class="panel-body" ng-if="!notPublished.length">
         Aucune de vos données n'est en attente de publication.
     </div>
-    <div class="list-group" ng-if="groupedDatasets['not-published']">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['not-published'] | orderBy:'title'">
+    <div class="list-group" ng-if="notPublished.length">
+        <div class="list-group-item" ng-repeat="dataset in notPublished | orderBy:'title'">
             <span class="pull-right">
-                <a href ng-click="publishDataset(dataset, 'private')">Publier en mode privé</a> |
-                <a href ng-click="publishDataset(dataset, 'public')">Publier</a>
+                <a href ng-click="publishDataset(dataset)">Publier</a>
             </span>
             {{ dataset.title }}
         </div>
     </div>
 </div>
 
-<!-- Private datasets -->
-<div ng-if="groupedDatasets['published-private']" class="panel panel-primary">
-    <div class="panel-heading">
-        <h2 class="panel-title">
-            <span class="pull-right"><span class="badge">{{ groupedDatasets['published-private'].length }}</span></span>
-            <i class="fa fa-cubes"></i> Données en mode privé
-        </h2>
-    </div>
-    <div class="list-group">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-private'] | orderBy:'title'">
-            <span class="pull-right">
-                <a href ng-click="publishDataset(dataset, 'public')">Publier</a> |
-                <a href ng-click="publishDataset(dataset, 'private')">Forcer la mise à jour</a> |
-                <a href ng-click="unpublishDataset(dataset)">Supprimer</a></span>
-            </span>
-            {{ dataset.title }}
-            <div ng-if="isPublished(dataset)"><a href="https://www.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
-        </div>
-    </div>
-</div>
-
-<!-- Public datasets -->
+<!-- Published datasets -->
 <div class="panel panel-success">
     <div class="panel-heading">
         <h2 class="panel-title">
-            <span ng-if="groupedDatasets['published-public']" class="pull-right"><span class="badge">{{ groupedDatasets['published-public'].length }}</span></span>
+            <span ng-if="published.length" class="pull-right"><span class="badge">{{ published.length }}</span></span>
             <i class="fa fa-cubes"></i> Données publiées
         </h2>
     </div>
-    <div class="panel-body" ng-if="!groupedDatasets['published-public']">
+    <div class="panel-body" ng-if="!published.length">
         Vous n'avez aucune donnée publiée.
     </div>
-    <div class="list-group" ng-if="groupedDatasets['published-public']">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-public'] | orderBy:'title'">
-            <span class="pull-right">
-                <a href ng-click="publishDataset(dataset, 'private')">Repasser en mode privé</a> |
-                <a href ng-click="publishDataset(dataset, 'public')">Forcer la mise à jour</a>
-            </span>
+    <div class="list-group" ng-if="published.length">
+        <div class="list-group-item" ng-repeat="dataset in published | orderBy:'title'">
             {{ dataset.title }}
-            <div ng-if="isPublished(dataset)"><a href="https://www.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
         </div>
     </div>
 </div>
 
 <!-- Datasets published by other -->
-<div ng-if="groupedDatasets['published-by-other']" class="panel panel-warning">
+<div ng-if="publishedByOthers.length" class="panel panel-warning">
     <div class="panel-heading">
-        <span class="pull-right"><span class="badge">{{ groupedDatasets['published-by-other'].length }}</span></span>
+        <span class="pull-right"><span class="badge">{{ publishedByOthers.length }}</span></span>
         <h2 class="panel-title"><i class="fa fa-cubes"></i> Données publiées par une autre organisation</h2>
     </div>
     <div class="list-group">
-        <div class="list-group-item" ng-repeat="dataset in groupedDatasets['published-by-other'] | orderBy:'title'">
-            <span class="pull-right">Publié par <a target="_blank" href="https://www.data.gouv.fr/fr/organizations/{{ dataset.publication.organization._id }}/">{{ dataset.publication.organization.name }}</a></span>
+        <div class="list-group-item" ng-repeat="dataset in publishedByOthers | orderBy:'title'">
             {{ dataset.title }}
-            <div><a href="https://www.data.gouv.fr/fr/datasets/{{ dataset.publication._id }}/" target="_blank"><i class="fa fa-external-link"></i> Consulter la fiche sur data.gouv.fr</a></div>
         </div>
-    </div>
-</div>
-
-<!-- Administration -->
-<div class="panel panel-primary" ng-if="me.isAdmin">
-    <div class="panel-heading">
-        <h2 class="panel-title"><i class="fa fa-wrench"></i> Administration</h2>
-    </div>
-    <div class="panel-body">
-        <button class="btn btn-danger" ng-click="unpublishAll()">Tout dépublier (irréversible)</button>
-        <button class="btn btn-primary" ng-click="publishAll()">Tout publier</button>
-        <button class="btn btn-primary" ng-click="syncAll()">Forcer la synchronisation</button>
     </div>
 </div>
 

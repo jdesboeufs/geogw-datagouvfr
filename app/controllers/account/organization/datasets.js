@@ -1,78 +1,57 @@
 angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $http) {
-    function organizationBaseUrl() {
-        return '/api/organizations/' + $scope.currentOrganization._id;
+    var baseUrl = '/api/organizations/' + $scope.currentOrganization._id;
+
+    function fetchNotPublishedYet() {
+        $http.get(baseUrl + '/datasets/not-published-yet').success(function (data) {
+            data.forEach(dataset => dataset.status = 'not-published');
+            $scope.notPublished = data;
+        });
+    }
+
+    function fetchPublished() {
+        $http.get(baseUrl + '/datasets/published').success(function (data) {
+            data.forEach(dataset => dataset.status = 'published');
+            $scope.published = data;
+        });
+    }
+
+    function fetchPublishedByOthers() {
+        $http.get(baseUrl + '/datasets/published-by-others').success(function (data) {
+            data.forEach(dataset => dataset.status = 'published-by-others');
+            $scope.publishedByOthers = data;
+        });
     }
 
     function refresh() {
-        $http.get(organizationBaseUrl() + '/datasets').success(function (data) {
-            $scope.datasets = data;
-            $scope.updateDatasetGroups();
-        });
+        fetchPublished();
+        fetchPublishedByOthers();
+        fetchNotPublishedYet();
     }
 
     refresh();
 
-    $scope.updateDatasetGroups = function () {
-        $scope.groupedDatasets = _.groupBy($scope.datasets, function (dataset) {
-            return $scope.publicationStatus(dataset);
-        });
-    };
-
-    $scope.publicationStatus = function (dataset) {
-        if (!dataset.publication || !dataset.publication._id) return 'not-published';
-        console.log(dataset.publication.organization, $scope.currentOrganization._id, dataset.publication.organization === $scope.currentOrganization._id);
-        if (dataset.publication.organization !== $scope.currentOrganization._id) return 'published-by-other';
-        return dataset.publication.status === 'public' ? 'published-public' : 'published-private';
-    };
-
-    $scope.isPublished = function (dataset) {
-        var publicationStatus = $scope.publicationStatus(dataset);
-        return publicationStatus.indexOf('published-p') === 0;
-    };
-
-    $scope.datasetToggleStatus = function (dataset) {
-        $scope.publishDataset(dataset, dataset.publication.status === 'public' ? 'private' : 'public');
-    };
-
-    $scope.publishDataset = function (dataset, status) {
+    $scope.publishDataset = function (dataset) {
         if (dataset.syncing) return;
+        if (dataset.status !== 'not-published') return;
 
         dataset.syncing = true;
         $http.put('/api/datasets/' + dataset._id + '/publication', {
             organization: $scope.currentOrganization._id,
-            status: status,
+            status: 'public',
             sourceCatalog: $scope.currentOrganization.sourceCatalog
         }).success(function (data) {
             dataset.syncing = false;
-            dataset.publication = data;
-            $scope.updateDatasetGroups();
+            dataset.status = 'published';
         }).error(function () {
             dataset.syncing = false;
         });
     };
 
     $scope.unpublishDataset = function (dataset) {
+        if (dataset.status !== 'published') return;
+
         $http.delete('/api/datasets/' + dataset._id + '/publication').success(function () {
-            dataset.publication = {};
-            $scope.updateDatasetGroups();
-        });
-    };
-
-    $scope.unpublishAll = function () {
-        $http.delete(organizationBaseUrl() + '/datasets/publication').success(function () {
-            refresh();
-        });
-    };
-
-    $scope.publishAll = function () {
-        $http.post(organizationBaseUrl() + '/datasets/publish-all').success(function () {
-            refresh();
-        });
-    };
-
-    $scope.syncAll = function () {
-        $http.post(organizationBaseUrl() + '/datasets/synchronize-all').success(function () {
-            refresh();
+            dataset.status = 'not-published';
         });
     };
 
