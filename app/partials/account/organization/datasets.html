@@ -19,7 +19,9 @@
     <div class="list-group" ng-if="notPublished.length">
         <div class="list-group-item" ng-repeat="dataset in notPublished | orderBy:'title'">
             <span class="pull-right">
-                <a href ng-click="publishDataset(dataset)">Publier</a>
+                <a ng-if="dataset.status === 'not-published' && !dataset.syncing" href ng-click="publishDataset(dataset)">Publier</a>
+                <span ng-if="dataset.syncing"><em>Publication en cours</em></span>
+                <span ng-if="dataset.status === 'published'">Publié</span>
             </span>
             {{ dataset.title }}
         </div>
