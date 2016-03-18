@@ -26,6 +26,11 @@
             {{ dataset.title }}
         </div>
     </div>
+    <div class="panel-footer clearfix" ng-if="notPublished.length">
+        <div class="pull-right">
+            <a class="btn btn-primary" ng-disabled="publishingAll" ng-click="publishAll()">Publier toutes les données</a>
+        </div>
+    </div>
 </div>
 
 <!-- Published datasets -->

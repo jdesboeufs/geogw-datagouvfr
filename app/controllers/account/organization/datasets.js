@@ -30,9 +30,13 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
 
     refresh();
 
-    $scope.publishDataset = function (dataset) {
-        if (dataset.syncing) return;
-        if (dataset.status !== 'not-published') return;
+    function publishDataset(dataset, cb) {
+        function ok() {
+            if (cb) cb();
+        }
+
+        if (dataset.syncing) return ok();
+        if (dataset.status !== 'not-published') return ok();
 
         dataset.syncing = true;
         $http.put('/api/datasets/' + dataset._id + '/publication', {
@@ -42,10 +46,15 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
         }).success(function (data) {
             dataset.syncing = false;
             dataset.status = 'published';
+            ok()
         }).error(function () {
             dataset.syncing = false;
+            console.log('Error while publishing dataset ' + dataset._id);
+            ok()
         });
-    };
+    }
+
+    $scope.publishDataset = publishDataset;
 
     $scope.unpublishDataset = function (dataset) {
         if (dataset.status !== 'published') return;
@@ -54,5 +63,12 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
             dataset.status = 'not-published';
         });
     };
+
+    $scope.publishAll = function () {
+        $scope.publishingAll = true;
+        async.eachLimit($scope.notPublished, 5, publishDataset, function () {
+            $scope.publishingAll = false;
+        });
+    }
 
 });
