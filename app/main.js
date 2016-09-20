@@ -14,7 +14,16 @@ marked.setOptions({ sanitize: true });
 mainApp.filter('marked', function ($sce) {
     return function (value) {
         if (!value) return '';
-        return $sce.trustAsHtml(marked(value.replace(/\r\n/gi, '@##@').replace(/\r\n/gi, '@##@')).replace(/@##@/gi, '<br>'));
+        return $sce.trustAsHtml(marked(value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;")
+          .replace(/\r\n/gi, '@##@')
+          .replace(/\r\n/gi, '@##@'))
+          .replace(/@##@/gi, '<br>')
+        );
     };
 });
 
