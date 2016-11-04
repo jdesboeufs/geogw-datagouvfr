@@ -66,7 +66,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             },
             resolve: {
                 user: function ($http) {
-                    return $http.get('/api/me').then(function (result) {
+                    return $http.get('/dgv/api/me').then(function (result) {
                         return result.data;
                     }, function () {
                         return false;
@@ -80,7 +80,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'mainCtrl',
             resolve: {
                 metrics: function ($http) {
-                    return $http.get('/api/datasets/metrics').then(function (result) {
+                    return $http.get('/dgv/api/datasets/metrics').then(function (result) {
                         return result.data;
                     });
                 }
@@ -106,7 +106,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             },
             resolve: {
                 organization: function ($stateParams, $http) {
-                    return $http.get('/api/organizations/' + $stateParams.organizationId).then(function (result) {
+                    return $http.get('/dgv/api/organizations/' + $stateParams.organizationId).then(function (result) {
                         return result.data;
                     }, function () {
                         return { _id: $stateParams.organizationId, producers: [] };
@@ -130,7 +130,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'OrganizationProducers',
             resolve: {
                 associatedProducers: function ($http) {
-                    return $http.get('/api/producers').then(function (result) {
+                    return $http.get('/dgv/api/producers').then(function (result) {
                         return result.data;
                     });
                 }
@@ -211,7 +211,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 });
 
 mainApp.controller('navbar', function ($scope, $http) {
-    $http.get('/api/me').success(function (data) {
+    $http.get('/dgv/api/me').success(function (data) {
         $scope.me = data;
     });
 });

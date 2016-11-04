@@ -1,5 +1,5 @@
 angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $http) {
-    var baseUrl = '/api/organizations/' + $scope.currentOrganization._id;
+    var baseUrl = '/dgv/api/organizations/' + $scope.currentOrganization._id;
 
     function fetchNotPublishedYet() {
         $http.get(baseUrl + '/datasets/not-published-yet').success(function (data) {
@@ -39,7 +39,7 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
         if (dataset.status !== 'not-published') return ok();
 
         dataset.syncing = true;
-        $http.put('/api/datasets/' + dataset._id + '/publication', {
+        $http.put('/dgv/api/datasets/' + dataset._id + '/publication', {
             organization: $scope.currentOrganization._id,
             status: 'public',
             sourceCatalog: $scope.currentOrganization.sourceCatalog
@@ -59,7 +59,7 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
     $scope.unpublishDataset = function (dataset) {
         if (dataset.status !== 'published') return;
 
-        $http.delete('/api/datasets/' + dataset._id + '/publication').success(function () {
+        $http.delete('/dgv/api/datasets/' + dataset._id + '/publication').success(function () {
             dataset.status = 'not-published';
         });
     };

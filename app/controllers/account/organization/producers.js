@@ -12,7 +12,7 @@ angular.module('mainApp').controller('OrganizationProducers', function ($scope, 
         });
     }
 
-    $http.get('/api/catalogs/' + $scope.currentOrganization.sourceCatalog + '/producers').success(function (facets) {
+    $http.get('/dgv/api/catalogs/' + $scope.currentOrganization.sourceCatalog + '/producers').success(function (facets) {
         var indexedProducers = {};
         facets.forEach(function (facet) {
             var producer = associatedProducers[facet.value] || { _id: facet.value };
@@ -28,7 +28,7 @@ angular.module('mainApp').controller('OrganizationProducers', function ($scope, 
     });
 
     function organizationBaseUrl() {
-        return '/api/organizations/' + $scope.currentOrganization._id;
+        return '/dgv/api/organizations/' + $scope.currentOrganization._id;
     }
 
     $scope.associateProducer = function (producer) {

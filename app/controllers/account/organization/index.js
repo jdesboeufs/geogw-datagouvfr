@@ -14,7 +14,7 @@ angular.module('mainApp').controller('OrganizationIndex', function ($scope, $htt
     $scope.selectedProducers = {};
 
     function organizationBaseUrl() {
-        return '/api/organizations/' + $scope.currentOrganization._id;
+        return '/dgv/api/organizations/' + $scope.currentOrganization._id;
     }
 
     $scope.refreshMetrics = function () {

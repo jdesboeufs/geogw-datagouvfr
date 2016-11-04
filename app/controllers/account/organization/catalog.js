@@ -5,7 +5,7 @@ angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $h
     });
 
     function organizationBaseUrl() {
-        return '/api/organizations/' + $scope.currentOrganization._id;
+        return '/dgv/api/organizations/' + $scope.currentOrganization._id;
     }
 
     $scope.selectedCatalog = function () {
@@ -21,7 +21,7 @@ angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $h
         if ($scope.currentOrganization.sourceCatalog) {
             $http.put(organizationBaseUrl(), { sourceCatalog: catalog._id }).success(onSuccess);
         } else {
-            $http.post('/api/organizations', {
+            $http.post('/dgv/api/organizations', {
                 _id: $scope.currentOrganization._id,
                 sourceCatalog: catalog._id
             }).success(onSuccess);
