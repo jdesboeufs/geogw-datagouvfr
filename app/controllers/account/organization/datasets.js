@@ -40,9 +40,7 @@ angular.module('mainApp').controller('OrganizationDatasets', function ($scope, $
 
         dataset.syncing = true;
         $http.put('/dgv/api/datasets/' + dataset._id + '/publication', {
-            organization: $scope.currentOrganization._id,
-            status: 'public',
-            sourceCatalog: $scope.currentOrganization.sourceCatalog
+            organization: $scope.currentOrganization._id
         }).success(function (data) {
             dataset.syncing = false;
             dataset.status = 'published';

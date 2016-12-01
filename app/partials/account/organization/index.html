@@ -10,8 +10,7 @@
         <h2 class="panel-title"><i class="fa fa-cubes"></i> Jeux de données</h2>
     </div>
     <div class="panel-body">
-        <p><strong>{{ datasetMetrics.published.public || 0 }}</strong> jeux de données sont <strong>publiés et accessibles</strong> sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.<br/>
-        <strong>{{ datasetMetrics.published.private || 0 }}</strong> jeux de données sont en <strong>mode privé</strong>.<br/>
+        <p><strong>{{ datasetMetrics.published || 0 }}</strong> jeux de données sont <strong>publiés et accessibles</strong> sur <a href="https://www.data.gouv.fr">data.gouv.fr</a>.<br/>
         <strong>{{ datasetMetrics.notPublishedYet || 0 }}</strong> jeux de données sont <strong>en attente de publication</strong>.</p>
     </div>
     <div class="panel-footer clearfix">

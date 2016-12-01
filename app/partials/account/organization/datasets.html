@@ -20,8 +20,8 @@
         <div class="list-group-item" ng-repeat="dataset in notPublished | orderBy:'title'">
             <span class="pull-right">
                 <a ng-if="dataset.status === 'not-published' && !dataset.syncing" href ng-click="publishDataset(dataset)">Publier</a>
-                <span ng-if="dataset.syncing"><em>Publication en cours</em></span>
-                <span ng-if="dataset.status === 'published'">Publié</span>
+                <span ng-if="dataset.syncing"><em>Publication demandée</em></span>
+                <span ng-if="dataset.status === 'published'">Publié planifiée</span>
             </span>
             {{ dataset.title }}
         </div>
@@ -46,7 +46,7 @@
     </div>
     <div class="list-group" ng-if="published.length">
         <div class="list-group-item" ng-repeat="dataset in published | orderBy:'title'">
-            {{ dataset.title }}
+            {{ dataset.title }} [<a href="{{dataset.remoteUrl}}">Fiche sur data.gouv.fr</a>]
         </div>
     </div>
 </div>
@@ -59,7 +59,7 @@
     </div>
     <div class="list-group">
         <div class="list-group-item" ng-repeat="dataset in publishedByOthers | orderBy:'title'">
-            {{ dataset.title }}
+            {{ dataset.title }} [<a href="{{dataset.remoteUrl}}">Fiche sur data.gouv.fr</a>]
         </div>
     </div>
 </div>

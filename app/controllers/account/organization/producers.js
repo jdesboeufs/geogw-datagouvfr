@@ -7,14 +7,14 @@ angular.module('mainApp').controller('OrganizationProducers', function ($scope, 
     function updateProducerGroups() {
         $scope.groupedProducers = _.groupBy($scope.producers, function (producer) {
             if (!producer.associatedTo) return 'available';
-            if (producer.associatedTo._id === $scope.currentOrganization._id) return 'organization';
+            if (producer.associatedTo === $scope.currentOrganization._id) return 'organization';
             return 'restricted';
         });
     }
 
-    $http.get('/dgv/api/catalogs/' + $scope.currentOrganization.sourceCatalog + '/producers').success(function (facets) {
+    $http.get('/api/geogw/services/' + $scope.currentOrganization.sourceCatalog + '/records?resultParts=facets&opendata=yes&availability=yes&facets[keyword]=0').success(function (result) {
         var indexedProducers = {};
-        facets.forEach(function (facet) {
+        (result.facets.organization || []).forEach(function (facet) {
             var producer = associatedProducers[facet.value] || { _id: facet.value };
             producer.count = facet.count;
             indexedProducers[producer._id] = producer;
