@@ -77,14 +77,7 @@ mainApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         .state('root.home', {
             url: '',
             templateUrl: '/partials/home.html',
-            controller: 'mainCtrl',
-            resolve: {
-                metrics: function ($http) {
-                    return $http.get('/dgv/api/datasets/metrics').then(function (result) {
-                        return result.data;
-                    });
-                }
-            }
+            controller: _.noop
         })
         .state('root.account', {
             url: 'account',
