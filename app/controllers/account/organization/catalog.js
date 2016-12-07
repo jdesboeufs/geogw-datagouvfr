@@ -18,14 +18,7 @@ angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $h
             $state.go('root.account.organization.index', { organizationId: $scope.currentOrganization._id });
         }
 
-        if ($scope.currentOrganization.sourceCatalog) {
-            $http.put(organizationBaseUrl(), { sourceCatalog: catalog._id }).success(onSuccess);
-        } else {
-            $http.post('/dgv/api/organizations', {
-                _id: $scope.currentOrganization._id,
-                sourceCatalog: catalog._id
-            }).success(onSuccess);
-        }
+        $http.put(organizationBaseUrl(), { sourceCatalog: catalog._id }).success(onSuccess);
     };
 
 });

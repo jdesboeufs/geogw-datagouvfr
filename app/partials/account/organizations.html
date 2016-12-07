@@ -17,7 +17,7 @@
         Choisissez l'organisation que vous souhaitez configurer :
     </div>
     <div class="list-group" ng-if="organizations">
-        <a ui-sref="root.account.organization.index({ organizationId: org._id })" class="list-group-item" ng-repeat="org in organizations">
+        <a ui-sref="root.account.organization.index({ organizationId: org.id })" class="list-group-item" ng-repeat="org in organizations">
             {{ org.name }}
         </a>
     </div>
