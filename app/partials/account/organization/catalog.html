@@ -5,7 +5,7 @@
   <li class="active">Sélection du catalogue source</li>
 </ol>
 
-<div ng-if="currentOrganization.sourceCatalog" class="alert alert-info">
+<div ng-if="currentOrganization.sourceCatalog.length" class="alert alert-info">
     Actuellement votre organisation est configurée avec le catalogue <strong>{{ selectedCatalog().name }}</strong>.
 </div>
 

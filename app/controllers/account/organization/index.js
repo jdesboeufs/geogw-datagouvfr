@@ -7,7 +7,7 @@ angular.module('mainApp').controller('OrganizationIndex', function ($scope, $htt
     $scope.datasetMetrics = {};
 
     $scope.selectedCatalog = function () {
-        return _.find($scope.catalogs, { _id: $scope.currentOrganization.sourceCatalog });
+        return _.find($scope.catalogs, { _id: $scope.currentOrganization.sourceCatalogs[0] });
     };
 
     $scope.producers = [];
@@ -26,7 +26,7 @@ angular.module('mainApp').controller('OrganizationIndex', function ($scope, $htt
     $scope.refreshMetrics();
 
     $scope.ready = function () {
-        return $scope.currentOrganization.sourceCatalog && $scope.currentOrganization.producers.length > 0
+        return $scope.currentOrganization.sourceCatalogs.length > 0 && $scope.currentOrganization.producers.length > 0
     };
 
 });

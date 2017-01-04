@@ -9,7 +9,7 @@ angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $h
     }
 
     $scope.selectedCatalog = function () {
-        return _.find($scope.catalogs, { _id: $scope.currentOrganization.sourceCatalog });
+        return _.find($scope.catalogs, { _id: $scope.currentOrganization.sourceCatalogs[0] });
     };
 
     $scope.selectCatalog = function (catalog) {
@@ -18,7 +18,7 @@ angular.module('mainApp').controller('OrganizationCatalog', function ($scope, $h
             $state.go('root.account.organization.index', { organizationId: $scope.currentOrganization._id });
         }
 
-        $http.put(organizationBaseUrl(), { sourceCatalog: catalog._id }).success(onSuccess);
+        $http.put(organizationBaseUrl(), { sourceCatalogs: [catalog._id] }).success(onSuccess);
     };
 
 });

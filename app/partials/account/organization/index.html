@@ -21,18 +21,18 @@
 </div>
 
 <!-- Catalog -->
-<div class="panel" ng-class="{ 'panel-warning': !currentOrganization.sourceCatalog, 'panel-success': currentOrganization.sourceCatalog }">
+<div class="panel" ng-class="{ 'panel-warning': !currentOrganization.sourceCatalogs.length, 'panel-success': currentOrganization.sourceCatalogs.length > 0 }">
     <div class="panel-heading">
         <h2 class="panel-title"><i class="fa fa-book"></i> Catalogue source</h2>
     </div>
-    <div class="panel-body" ng-if="!currentOrganization.sourceCatalog">
+    <div class="panel-body" ng-if="!currentOrganization.sourceCatalogs.length">
         Pour poursuivre vous devez associer un <strong>catalogue source</strong> à votre organisation <a href="https://www.data.gouv.fr">data.gouv.fr</a>.
     </div>
-    <div class="panel-body" ng-if="currentOrganization.sourceCatalog">
+    <div class="panel-body" ng-if="currentOrganization.sourceCatalogs.length">
         Le catalogue <strong>{{ selectedCatalog().name }}</strong> est associé à votre organisation.
         <small><a ui-sref="root.account.organization.catalog({ organizationId: currentOrganization._id })">Modifier</a></small>
     </div>
-    <div ng-if="!currentOrganization.sourceCatalog" class="panel-footer clearfix">
+    <div ng-if="!currentOrganization.sourceCatalogs.length" class="panel-footer clearfix">
         <div class="pull-right">
             <a class="btn btn-warning" ui-sref="root.account.organization.catalog({ organizationId: currentOrganization._id })">Choisir un catalogue</a>
         </div>
@@ -40,7 +40,7 @@
 </div>
 
 <!-- Producers -->
-<div ng-if="currentOrganization.sourceCatalog" class="panel" ng-class="{ 'panel-warning': currentOrganization.producers.length === 0, 'panel-success': currentOrganization.producers.length > 0 }">
+<div ng-if="currentOrganization.sourceCatalogs.length" class="panel" ng-class="{ 'panel-warning': currentOrganization.producers.length === 0, 'panel-success': currentOrganization.producers.length > 0 }">
     <div class="panel-heading">
         <h2 class="panel-title"><i class="fa fa-users"></i> Producteurs source</h2>
     </div>

@@ -12,7 +12,7 @@ angular.module('mainApp').controller('OrganizationProducers', function ($scope, 
         });
     }
 
-    $http.get('/api/geogw/services/' + $scope.currentOrganization.sourceCatalog + '/records?resultParts=facets&opendata=yes&availability=yes&facets[keyword]=0').success(function (result) {
+    $http.get('/api/geogw/services/' + $scope.currentOrganization.sourceCatalogs[0] + '/records?resultParts=facets&opendata=yes&availability=yes&facets[keyword]=0').success(function (result) {
         var indexedProducers = {};
         (result.facets.organization || []).forEach(function (facet) {
             var producer = associatedProducers[facet.value] || { _id: facet.value };
